@@ -1,51 +1,49 @@
+
 # USP Agent Manager
 
-USP Agent Manager is a Python script for managing USP (User Services Platform) agents using Docker. It provides a command-line interface for various operations such as installing dependencies, downloading, creating, editing, showing, and deleting USP agents.
+A Python-based utility for streamlined management of User Services Platform (USP) agents within Docker environments.
 
 ## Features
 
-- Install Docker and Docker Compose
-- Download USP Agent from the Broadband Forum repository
-- Create USP Agents with customizable settings
-- Edit USP Agents
-- Show a list of existing USP Agents
-- Delete USP Agents
+* **Dependency Installation:** Automates the installation of Docker and Docker Compose, ensuring a seamless setup experience.
+* **Agent Acquisition:** Fetches USP agents directly from the official Broadband Forum repository.
+* **Agent Creation:** Provides guided configuration for generating new USP agents with tailored settings.
+* **Agent Modification:**  Enables straightforward editing of existing USP agent configurations.
+* **Agent Overview:** Displays a comprehensive list of currently installed USP agents. 
+* **Agent Removal:** Simplifies the deletion of USP agents when necessary.
 
 ## Prerequisites
 
-- Python 3.x
-- Root privileges (sudo) for some operations
-- Docker and Docker Compose installed
+* Python# Installation**
 
-## Installation
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/polarnaldo/USPython.git
+   ```
 
-1. Clone the repository:
+2. **Change into the project directory:**
+   ```bash
+   cd USPython
+   ```
 
-```
-git clone https://github.com/polarnaldo/USPython.git
-```
-
-2. Navigate to the directory:
-
-```
-cd usp-agent-manager
-```
-
-3. Run the script:
-
-```
-sudo python3 USPython.py
-```
+3. **Execute the script:**
+   ```bash
+   sudo python3 USPython.py
+   ```
 
 ## Usage
 
-- Run the script and follow the menu prompts to perform various operations.
-- Make sure to have root privileges for some operations, as indicated by the script.
+1. **Run the script.**  You'll be presented with an interactive, menu-driven interface.
+2. **Follow the prompts** to install dependencies, download agents, create new agents, edit configurations, view your agent list, or delete agents.
+3. **Note:** Root privileges (using `sudo`) might be required for certain operations.
 
 ## Contributing
 
-Contributions are welcome! Feel free to submit issues or pull requests.
+We enthusiastically welcome contributions!  To share your ideas or code improvements:
+
+1. **Raise an Issue:** File an issue to describe bugs or suggest new features.
+2. **Fork & Submit a Pull Request:**  Follow standard GitHub workflows to propose your changes.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+Distributed under the MIT License. See [LICENSE](LICENSE) for full details.
