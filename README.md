@@ -49,6 +49,3 @@ Contributions are welcome! Feel free to submit issues or pull requests.
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-```
-
-Replace `yourusername` in the repository URL with your GitHub username. Adjust the usage instructions and prerequisites as necessary.
