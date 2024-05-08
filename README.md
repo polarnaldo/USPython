@@ -1,4 +1,3 @@
-
 # USP Agent Manager
 
 A Python-based utility for streamlined management of User Services Platform (USP) agents within Docker environments.
@@ -14,7 +13,9 @@ A Python-based utility for streamlined management of User Services Platform (USP
 
 ## Prerequisites
 
-* Python# Installation**
+* Python
+
+## Installation**
 
 1. **Clone the repository:**
    ```bash
