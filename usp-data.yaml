@@ -1,0 +1,26 @@
+#-------------------------------------------------------------------------------------
+#
+# USP AGENT CONFIG FILE
+#
+# The End Point ID must be unique.
+#
+# You cannot change the definitions once created.
+#
+# The type of the data model parameters must be "Read Only" or "Read Write".
+#
+#-------------------------------------------------------------------------------------
+
+usp_agent:
+  definitions:
+    - end_point_id: user-agent
+    - manufacturer_parameter: Big Blue Innova
+    - product_class: Smart Lock
+    - model_parameter: SL2000
+  data_model:
+    - parameter: Device.Test.Notes
+      value: Nota de ejemplo  
+      type: Read Only
+    - parameter: Device.Test.Location
+      value: Living Room
+      type: Read Write
+    

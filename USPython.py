@@ -3,6 +3,7 @@
 # USPython - Author: @polarnaldo (Pol Arnaldo)
 
 import signal
+import yaml, argparse
 from time import sleep
 import os, sys, subprocess
 
@@ -101,12 +102,12 @@ def install_dependencies():
         if git_installed != 0:
             print(colours.greenColour + "\n[+]" + colours.turquoiseColour + " - Installing Git..." + colours.endColour)
             os.system("apt install git -y > /dev/null 2>&1")
-            print(colours.greenColour + "\n[+] - Git installed successfully!" + colours.endColour)
+            print(colours.greenColour + "\n[+] - Git installed successfully!\n" + colours.endColour)
         else:
             print(colours.greenColour + "\n[+]" + colours.turquoiseColour + " - Git already installed." + colours.endColour)
             ###########################################################################################################################################################sleep(1)
         
-        print(colours.greenColour + "\n[+] - Dependencies installed successfully!" + colours.endColour)
+        print(colours.greenColour + "\n[+] - Dependencies installed successfully!\n" + colours.endColour)
         ###########################################################################################################################################################sleep(3)
     except:
         print(colours.redColour + "[!] - Error while installing dependencies." + colours.endColour)
@@ -141,7 +142,6 @@ def create_usp_agent():
         os.system("cp {}/obuspa/src/vendor/vendor_defs.h {}".format(script_directory, script_directory))
         os.system("cp {}/factory-reset-mqtt.txt {}/factory-reset-mqtt.txt.bak".format(script_directory,script_directory))
         
-
         while True:
             endpoint_id_name = input(str(colours.yellowColour + "\n[+]" + colours.blueColour + " - Define the endpoint_id_name: "  + colours.endColour ))
             if endpoint_id_name.strip():
@@ -178,8 +178,10 @@ def create_usp_agent():
                 while True:
 
                     data_type = input(str("Which data type do you want to add to the data model (1-READ/ONLY DATA | 2-READ/WRITE DATA)?"))
-
+                
                     if data_type == "1":
+                        
+                        
 
                         while True:
                             read_only_data = input("Escribe los datos adicionales (por ejemplo, \"Device.Prueba.Prueba\"): ")
@@ -215,6 +217,19 @@ def create_usp_agent():
                         print("Output:", transformed_data)
                         print(transformed_data_clean)
                         
+                        test = transformed_data_clean.replace('.', '')
+
+                        command = (
+                            r'''sed -i '0,/return USP_ERR_OK;/ {
+                            /return USP_ERR_OK;/i\\tint ''' + test + r''' = USP_REGISTER_DBParam_ReadWrite("'''
+                            + transformed_data_clean 
+                            + r'''", "MyModelNumber", NULL, NULL, DM_STRING);'''
+                            + r'''\n\tif (''' + test + r''' != USP_ERR_OK){return ''' + test + r''';\}\n
+                        }' ''' + script_directory + r"/obuspa/src/vendor/vendor.c"
+                        )  
+
+                        os.system(command)
+
                         sleep(3)
 
                         # INSERTAR VARIABLES
@@ -255,7 +270,7 @@ def create_usp_agent():
         os.system("cp {}/vendor_defs.h {}/obuspa/src/vendor/vendor_defs.h".format(script_directory, script_directory))
         os.system("rm -r {}/vendor_defs.h".format(script_directory))
         
-        os.system("cp {}/vendor.c {}/obuspa/src/vendor/vendor.c".format_map(script_directory, script_directory))
+        os.system("cp {}/vendor.c {}/obuspa/src/vendor/vendor.c".format(script_directory, script_directory))
         os.system("rm -r {}/vendor.c". format(script_directory))
 
         os.system("cp {}/factory-reset-mqtt.txt.bak {}/factory-reset-mqtt.txt".format(script_directory, script_directory))
@@ -263,9 +278,10 @@ def create_usp_agent():
 
         sleep(3)
 
-    except:
-        print(colours.redColour + "[!] - Error while creating USP Agent." + colours.endColour)
-        sleep(3)
+    except Exception as e:
+        # Imprimir el mensaje de error
+        print(colours.redColour + "[!] - Error while creating USP Agent:", str(e) + colours.endColour)
+        sleep(10)
 
 def edit_usp_agent():
     try:
@@ -355,9 +371,8 @@ def delete_usp_agent():
         print(colours.redColour + "[!] - Error while deleting USP Agent." + colours.endColour)
         sleep(3)
 
-# MAIN
 
-if __name__ == "__main__":
+def main():
 
     if not check_root():
         print(colours.redColour + "\n[!] - You must be root to run this script.\n" + colours.endColour)
@@ -394,3 +409,125 @@ if __name__ == "__main__":
         else:
             print(colours.redColour + "\n[?] - Invalid Option. Try Again..." + colours.endColour)
             sleep(3)
+
+def create_usp_agent_with_yaml():
+    # Read the YAML file
+    with open('usp-data.yaml', 'r') as file:
+        data = yaml.safe_load(file)
+
+    # Guardar los datos en variables
+    end_point_id = data['usp_agent']['definitions'][0]['end_point_id']
+    manufacturer_parameter = data['usp_agent']['definitions'][1]['manufacturer_parameter']
+    product_class = data['usp_agent']['definitions'][2]['product_class']
+    model_parameter = data['usp_agent']['definitions'][3]['model_parameter']
+
+    # Check for unknown types in the document
+    valid_types = {"Read Only", "Read Write"}
+    found_types = {element['type'] for element in data['usp_agent']['data_model']}
+    unknown_types = found_types - valid_types
+
+    if unknown_types:
+        for unknown_type in unknown_types:
+            print(f"Unknown type: '{unknown_type}' is misspelled in the document.")
+    else:
+        # Access the data model
+        seen_parameters = set()
+        duplicate_parameters = set()
+        for index, element in enumerate(data['usp_agent']['data_model'], start=1):
+            parameter = element['parameter']
+            if not parameter.startswith('Device.') or len(parameter.split('.')) < 2:
+                print(f"Error: Parameter '{parameter}' on line {index} does not start with 'Device.' or is missing component after '.'.")
+                continue
+            
+            if parameter in seen_parameters:
+                duplicate_parameters.add(parameter)
+            seen_parameters.add(parameter)
+
+        if duplicate_parameters:
+            print("Error: Duplicate parameters found:")
+            for parameter in duplicate_parameters:
+                print(f"  - {parameter}")
+
+    script_directory = os.path.dirname(__file__)
+
+    # Copy Default
+    os.system("cp {}/obuspa/src/vendor/vendor.c {}".format(script_directory, script_directory))
+    os.system("cp {}/obuspa/src/vendor/vendor_defs.h {}".format(script_directory, script_directory))
+    os.system("cp {}/factory-reset-mqtt.txt {}/factory-reset-mqtt.txt.bak".format(script_directory,script_directory))
+
+
+    for element in data['usp_agent']['data_model']:
+        transformed_data_clean = element['parameter']
+        test= element['parameter'].replace('.', '')
+        value = element['value']
+
+        if element['type'] == 'Read Only':
+            # STILL IN PROCESS
+            command_read_only = (
+            r'''sed -i '1,/return USP_ERR_OK;/ {
+            /return USP_ERR_OK;/i\\tint ''' + test + r''' = USP_REGISTER_VendorParam_ReadOnly("'''
+            + transformed_data_clean 
+            + r'''", GetModelNumber, DM_STRING);'''
+            + r'''\n\tif (''' + test + r''' != USP_ERR_OK){return ''' + test + r''';\}\n
+            }' ''' + script_directory + r"/obuspa/src/vendor/vendor.c"
+            )
+
+            os.system(command_read_only)        
+            
+        if element['type'] == 'Read Write':
+
+            command_readwrite = (
+            r'''sed -i '0,/return USP_ERR_OK;/ {
+            /return USP_ERR_OK;/i\\tint ''' + test + r''' = USP_REGISTER_DBParam_ReadWrite("'''
+            + transformed_data_clean 
+            + r'''", "''' + value + r'''", NULL, NULL, DM_STRING);'''
+            + r'''\n\tif (''' + test + r''' != USP_ERR_OK){return ''' + test + r''';\}\n
+            }' ''' + script_directory + r"/obuspa/src/vendor/vendor.c"
+            )
+
+            os.system(command_readwrite)
+
+    # Edit Vendor Defs
+    os.system("sed -i 's/#define VENDOR_MODEL_NAME    \"USP Agent\"/#define VENDOR_MODEL_NAME    \"{}\"/' {}/obuspa/src/vendor/vendor_defs.h".format(model_parameter, script_directory))
+    os.system("sed -i 's/#define VENDOR_MANUFACTURER  \"Manufacturer\"/#define VENDOR_MANUFACTURER  \"{}\"/' {}/obuspa/src/vendor/vendor_defs.h".format(manufacturer_parameter, script_directory))
+    os.system("sed -i 's/#define VENDOR_PRODUCT_CLASS \"USP Agent\"/#define VENDOR_PRODUCT_CLASS \"{}\"/' {}/obuspa/src/vendor/vendor_defs.h".format(product_class, script_directory))
+
+    # Edit Endpoint ID
+    os.system("sed -i 's/Device.LocalAgent.EndpointID \"usp-agent-mqtt\"/Device.LocalAgent.EndpointID \"{}\"/' {}/factory-reset-mqtt.txt".format(end_point_id, script_directory))
+
+    # Create Docker Image of USP Agent using Dockerfile located in the script directory
+    os.system("docker build -t uspagent:{} {}/.".format(end_point_id, script_directory))
+
+    # Create Docker Container using the previously build Docker image
+    os.system("docker run -d -v {}/factory-reset-mqtt.txt:/obuspa/factory-reset-mqtt.txt --network host --name USPAgent-{} uspagent:{} obuspa -r /obuspa/factory-reset-mqtt.txt -p -v4 -i lo".format(script_directory, end_point_id, end_point_id))
+
+    # Restore Default
+    os.system("cp {}/vendor_defs.h {}/obuspa/src/vendor/vendor_defs.h".format(script_directory, script_directory))
+    os.system("rm -r {}/vendor_defs.h".format(script_directory))
+
+    os.system("cp {}/vendor.c {}/obuspa/src/vendor/vendor.c".format(script_directory, script_directory))
+    os.system("rm -r {}/vendor.c". format(script_directory))
+
+    os.system("cp {}/factory-reset-mqtt.txt.bak {}/factory-reset-mqtt.txt".format(script_directory, script_directory))
+    os.system("rm -r {}/factory-reset-mqtt.txt.bak".format(script_directory))
+
+# MAIN
+
+if __name__ == "__main__":
+    
+    if not check_root():
+        print(colours.redColour + "\n[!] - You must be root to run this script.\n" + colours.endColour)
+        sys.exit(1)
+
+    parser = argparse.ArgumentParser(description='USPython - Author: @polarnaldo - This program allows you to create a USP agent with YAML - Optional arguments:')
+    parser.add_argument('-c', '--create', action='store_true', help='Create USP agent with YAML')
+    parser.add_argument('-d', '--dependencies', action='store_true', help='Install dependencies')
+
+    args = parser.parse_args()
+
+    if args.create:
+        create_usp_agent_with_yaml()
+    elif args.dependencies:
+        install_dependencies()
+    else:
+        main()

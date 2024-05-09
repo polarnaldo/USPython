@@ -15,7 +15,7 @@ A Python-based utility for streamlined management of User Services Platform (USP
 
 * Python
 
-## Installation**
+## Installation
 
 1. **Clone the repository:**
    ```bash
@@ -31,6 +31,22 @@ A Python-based utility for streamlined management of User Services Platform (USP
    ```bash
    sudo python3 USPython.py
    ```
+4. **Optional Arguments:**
+
+- -c or --create: Create USP agent with YAML.
+- -d or --dependencies: Install dependencies.
+
+To use these optional arguments, you can run the script as follows:
+
+```
+    sudo python3 USPython.py -c
+    sudo python3 USPython.py --create
+    sudo python3 USPython.py -d
+    sudo python3 USPython.py --dependencies
+```
+The -c or --create option triggers the creation of a USP agent with YAML configuration. The -d or --dependencies option indicates the intention to install dependencies required by the program.
+
+If no arguments are provided, the script will print a usage message summarizing the available options and their usage.
 
 ## Usage
 

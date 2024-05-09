@@ -1,1 +1,0 @@
-sed -i '/return USP_ERR_OK;/i\printf("Primera ocurrencia encontrada\\n");' vendor.c

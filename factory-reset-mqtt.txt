@@ -16,7 +16,7 @@
 # Adding MQTT parameters to test the datamodel interface
 #
 
-Device.LocalAgent.EndpointID "smartlock"
+Device.LocalAgent.EndpointID "usp-agent-mqtt"
 
 ## Adding boot params
 Device.LocalAgent.Controller.1.BootParameter.1.Enable true
