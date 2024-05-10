@@ -8,19 +8,21 @@
 #
 # The type of the data model parameters must be "Read Only" or "Read Write".
 #
+# The MTP-type must be mqtt or websockets.
+#
 #-------------------------------------------------------------------------------------
 
 usp_agent:
   definitions:
-    - end_point_id: user-agent
+    - end_point_id: user-agent-test
     - manufacturer_parameter: Big Blue Innova
     - product_class: Smart Lock
     - model_parameter: SL2000
+    - mtp-type: mqtt
   data_model:
     - parameter: Device.Test.Notes
       value: Nota de ejemplo  
       type: Read Only
     - parameter: Device.Test.Location
-      value: Living Room
+      value: Test
       type: Read Write
-    
