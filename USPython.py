@@ -128,37 +128,41 @@ def download_usp_agent():
         show_banner()
 
         # Verifying if the directory exists
-        if not os.path.exists("obuspa"):
+        if not os.path.exists(f"{script_directory}/obuspa"):
             # Clone the repository if it doesn't exist
             print(colours.greenColour + "\n[+]" + colours.turquoiseColour + " - Downloading USP Agent (Obuspa)..." + colours.endColour)
-            os.system("git clone https://github.com/BroadbandForum/obuspa.git > /dev/null 2>&1")
-            print(colours.greenColour + "\n[+] - Repository cloned successfully." + colours.endColour)
+            os.system(f"git clone https://github.com/BroadbandForum/obuspa.git {script_directory}/obuspa > /dev/null 2>&1")
+            print(colours.greenColour + "\n[+] - Repository cloned successfully.\n" + colours.endColour)
             sleep(3)
         else:
-            print(colours.greenColour + "\n[+] - Repository already exists." + colours.endColour)
+            print(colours.greenColour + "\n[+] - Repository already exists.\n" + colours.endColour)
             sleep(3)
+
     except:
 
         print(colours.redColour + "[!] - Error while downloading USP Agent." + colours.endColour)
         sleep(3)
 
 def verify_usp_agent():
-#     # Verifying if the directory exists
-#     if not os.path.exists("obuspa"):
-#         # Clone the repository if it doesn't exist
-#         print(colours.greenColour + "\n[+]" + colours.turquoiseColour + " - Downloading USP Agent (Obuspa)..." + colours.endColour)
-#         os.system("git clone https://github.com/BroadbandForum/obuspa.git > /dev/null 2>&1")
-#         print(colours.greenColour + "\n[+] - Repository cloned successfully." + colours.endColour)
-         sleep(3)
+
+    # Verifying if the directory exists
+    if not os.path.exists(f"{script_directory}/obuspa"):
+        print(colours.redColour + "\n[!] - Download the USP Agent\n" + colours.endColour)
+        sleep(3)
+
+        return False
+
+    return True
 
 def copy_usp_agent():
 
     try:
         
-        # Copy files that can be modified (vendor.c, vendor_defs.h and factory-reset-mqtt.txt)
+        # Copy files that can be modified (vendor.c, vendor_defs.h and factory-reset.txt)
         os.system("cp {}/obuspa/src/vendor/vendor.c {}".format(script_directory, script_directory))
         os.system("cp {}/obuspa/src/vendor/vendor_defs.h {}".format(script_directory, script_directory))
         os.system("cp {}/factory-reset-mqtt.txt {}/factory-reset-mqtt.txt.bak".format(script_directory,script_directory))
+        os.system("cp {}/factory-reset-websockets.txt {}/factory-reset-websockets.txt.bak".format(script_directory,script_directory))
 
     except:
 
@@ -181,6 +185,10 @@ def restore_usp_agent():
         os.system("cp {}/factory-reset-mqtt.txt.bak {}/factory-reset-mqtt.txt".format(script_directory, script_directory))
         os.system("rm -r {}/factory-reset-mqtt.txt.bak".format(script_directory))
 
+        # Restore factory-reset-websockets.txt
+        os.system("cp {}/factory-reset-websockets.txt.bak {}/factory-reset-websockets.txt".format(script_directory, script_directory))
+        os.system("rm -r {}/factory-reset-websockets.txt.bak".format(script_directory))
+
     except:
 
         print(colours.redColour + "[!] - Error while restoring USP Agent." + colours.endColour)
@@ -192,9 +200,18 @@ def create_usp_agent():
 
         show_banner()
 
+        if not verify_usp_agent(): return
+
         copy_usp_agent()
 
         # Add basic data to the data model
+
+        while True:
+            user_agent_mtp = input(str("\n[+] - Define the Message Transfer Protocol of the USP Agent (MQTT or WebSockets): "))
+            if user_agent_mtp in ("MQTT","WebSockets"):
+                break
+            else:
+                print(colours.redColour + "\n[!] - Please provide a valid MTP type." + colours.endColour)
 
         while True:
             endpoint_id_name = input(str(colours.yellowColour + "\n[+]" + colours.blueColour + " - Define the endpoint_id_name: "  + colours.endColour ))
@@ -236,13 +253,13 @@ def create_usp_agent():
 
         while True:
 
-            exta_data = input(str("Do you want to add more data to the data model? (y/n)"))
+            exta_data = input(str("\n[+] - Do you want to add more data to the data model (y/n)? "))
 
             if exta_data == "Y" or exta_data == "y":
     
                 while True:
                     
-                    data_type = input(str("Which data type do you want to add to the data model (1-READ/ONLY DATA | 2-READ/WRITE DATA)?"))
+                    data_type = input(str("\n[+] - Which data type do you want to add to the data model (1-READ/ONLY DATA | 2-READ/WRITE DATA)? "))
 
                     # Add read only parameter to the data model
 
@@ -252,7 +269,7 @@ def create_usp_agent():
 
                         while True:
 
-                            read_only_parameter = input("Escribe los datos adicionales (por ejemplo, \"Device.Test.Location\"): ")
+                            read_only_parameter = input("\n[+] - Write the parameter you want to add (e.g - Device.Test.Location): ")
                             
                             # Verify that there are not whitespaces in the output
                             if ' ' not in read_only_parameter:
@@ -268,17 +285,13 @@ def create_usp_agent():
                                         break
 
                                     else:
-                                        print("La cadena no debe terminar con '.', ',', o '-'. Inténtalo de nuevo.")
+                                        print("\n[!] - The parameter must not end: '.', ',', o '-'. Try it again.")
                                 else:
-                                    print("Deben haber al menos dos palabras y la primera palabra debe ser 'device'. Inténtalo de nuevo.")
+                                    print("\n[!] - The parameter must have at least two words and the first one must be 'Device'. Try it again.")
                             else:
-                                print("No se permiten espacios en los datos. Inténtalo de nuevo.")
+                                print("\n[!] - The parameter must not have whitespaces. Try it again.")
 
-
-
-                        value = input(str("Value: "))
-
-
+                        value = input(str("\n[+] - Write the value of the parameter you want to add: "))
 
                         # Capitalizar la primera letra de cada palabra
                         capitalized_words = [word.capitalize() for word in words]
@@ -292,7 +305,7 @@ def create_usp_agent():
 
                         transformed_data_clean=transformed_data.replace('"', '')
 
-                        print("Output:", transformed_data)
+                        print("\nInput:", transformed_data)
                         print(transformed_data_clean)
                         
                         test = transformed_data_clean.replace('.', '')
@@ -329,7 +342,7 @@ def create_usp_agent():
 
                         while True:
 
-                            read_write_parameter = input("Escribe los datos adicionales (por ejemplo, \"Device.Test.Location\"): ")
+                            read_write_parameter = input("\n[+] - Write the parameter you want to add (e.g - Device.Test.Location): ")
                             
                             # Verify that there are not whitespaces in the output
                             if ' ' not in read_write_parameter:
@@ -345,14 +358,14 @@ def create_usp_agent():
                                         break
 
                                     else:
-                                        print("La cadena no debe terminar con '.', ',', o '-'. Inténtalo de nuevo.")
+                                        print("\n[!] - The parameter must not end: '.', ',', o '-'. Try it again.")
                                 else:
-                                    print("Deben haber al menos dos palabras y la primera palabra debe ser 'device'. Inténtalo de nuevo.")
+                                    print("\n[!] - The parameter must have at least two words and the first one must be 'Device'. Try it again.")
                             else:
-                                print("No se permiten espacios en los datos. Inténtalo de nuevo.")
+                                print("\n[!] - The parameter must not have whitespaces. Try it again.")
 
 
-                        value = input(str("Value: "))
+                        value = input(str("\n[+] - Write the value of the parameter you want to add: "))
 
 
                         # Capitalizar la primera letra de cada palabra
@@ -367,7 +380,7 @@ def create_usp_agent():
 
                         transformed_data_clean=transformed_data.replace('"', '')
 
-                        print("Output:", transformed_data)
+                        print("\nInput:", transformed_data)
                         print(transformed_data_clean)
                         
                         test = transformed_data_clean.replace('.', '')
@@ -393,7 +406,7 @@ def create_usp_agent():
                         print(colours.redColour + "\n[?] - Invalid Option. Try Again..." + colours.endColour)        
 
             elif exta_data == "N" or exta_data == "n":
-                print("No")
+                
                 sleep(3)
                 break
 
@@ -407,13 +420,22 @@ def create_usp_agent():
         
         # Edit Endpoint ID
         os.system("sed -i 's/Device.LocalAgent.EndpointID \"usp-agent-mqtt\"/Device.LocalAgent.EndpointID \"{}\"/' {}/factory-reset-mqtt.txt".format(endpoint_id_name, script_directory))
+        os.system("sed -i 's/Device.LocalAgent.EndpointID \"usp-agent-ws\"/Device.LocalAgent.EndpointID \"{}\"/' {}/factory-reset-websockets.txt".format(endpoint_id_name, script_directory))
 
         # Create Docker Image of USP Agent using Dockerfile located in the script directory
         os.system("docker build -t uspagent:{} {}/.".format(endpoint_id_name, script_directory))
 
         # Create Docker Container using the previously build Docker image
-        os.system("docker run -d -v {}/factory-reset-mqtt.txt:/obuspa/factory-reset-mqtt.txt --network host --name USPAgent-{} uspagent:{} obuspa -r /obuspa/factory-reset-mqtt.txt -p -v4 -i lo".format(script_directory, endpoint_id_name, endpoint_id_name))
+
+        if user_agent_mtp == "MQTT":
+            
+            os.system("docker run -d -v {}/factory-reset-mqtt.txt:/obuspa/factory-reset-mqtt.txt --network host --name USPAgent-{} uspagent:{} obuspa -r /obuspa/factory-reset-mqtt.txt -p -v4 -i lo".format(script_directory, endpoint_id_name, endpoint_id_name))
         
+        if user_agent_mtp == "WebSockets":
+
+            os.system("docker run -d -v {}/factory-reset-websockets.txt:/obuspa/factory-reset-websockets.txt --network host --name USPAgent-{} uspagent:{} obuspa -r /obuspa/factory-reset-websockets.txt -p -v4 -i lo".format(script_directory, endpoint_id_name, endpoint_id_name))
+            # os.system("docker run -d -v {}/factory-reset-mqtt.txt:/obuspa/factory-reset-mqtt.txt --network host --name USPAgent-{} uspagent:{} obuspa -r /obuspa/factory-reset-mqtt.txt -p -v4 -i lo".format(script_directory, endpoint_id_name, endpoint_id_name))
+            
         restore_usp_agent()
 
         sleep(3)
@@ -427,6 +449,8 @@ def create_usp_agent():
 def create_usp_agent_with_yaml():
     
     try:
+
+        if not verify_usp_agent(): return
 
         # READ THE YAML FILE
         with open('usp-data.yaml', 'r') as file:
@@ -571,7 +595,9 @@ def edit_usp_agent():
         sleep(3)
 
 def show_usp_agent():
+
     try:
+
         show_banner()
 
         output = subprocess.check_output("docker ps | grep USPAgent | awk '{print $NF}' | sort", shell=True, text=True)
@@ -595,6 +621,7 @@ def show_usp_agent():
         sleep(5)
 
     except:
+
         print(colours.redColour + "[!] - Error while showing USP Agent." + colours.endColour)
         sleep(3)
 
@@ -704,13 +731,16 @@ if __name__ == "__main__":
         sys.exit(1)
 
     parser = argparse.ArgumentParser(description='USPython - Author: @polarnaldo - This program allows you to create a USP agent with YAML - Optional arguments:')
-    parser.add_argument('-c', '--create', action='store_true', help='Create USP agent with YAML')
     parser.add_argument('-d', '--dependencies', action='store_true', help='Install dependencies')
+    parser.add_argument('-a', '--agent', action='store_true', help='Download USP Agent (Obuspa)')
+    parser.add_argument('-c', '--create', action='store_true', help='Create USP agent with YAML')
 
     args = parser.parse_args()
 
     if args.create:
         create_usp_agent_with_yaml()
+    elif args.agent:
+        download_usp_agent()
     elif args.dependencies:
         install_dependencies()
     else:
