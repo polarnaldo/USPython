@@ -15,6 +15,7 @@ script_directory = os.path.dirname(__file__)
 
 def signal_handler(key, frame):
     print(colours.redColour + "\n\n[!] - Exiting...\n" + colours.endColour)
+    restore_usp_agent()
     sys.exit(1)
 
 signal = signal.signal(signal.SIGINT, signal_handler)
@@ -174,20 +175,20 @@ def restore_usp_agent():
     try:
 
         # Restore vendor.c
-        os.system("cp {}/vendor.c {}/obuspa/src/vendor/vendor.c".format(script_directory, script_directory))
-        os.system("rm -r {}/vendor.c". format(script_directory))
+        os.system("cp {}/vendor.c {}/obuspa/src/vendor/vendor.c > /dev/null 2>&1".format(script_directory, script_directory))
+        os.system("rm -r {}/vendor.c > /dev/null 2>&1". format(script_directory))
 
         # Restore vendor_defs.h
-        os.system("cp {}/vendor_defs.h {}/obuspa/src/vendor/vendor_defs.h".format(script_directory, script_directory))
-        os.system("rm -r {}/vendor_defs.h".format(script_directory))
+        os.system("cp {}/vendor_defs.h {}/obuspa/src/vendor/vendor_defs.h > /dev/null 2>&1".format(script_directory, script_directory))
+        os.system("rm -r {}/vendor_defs.h > /dev/null 2>&1".format(script_directory))
 
         # Restore factory-reset-mqtt.txt
-        os.system("cp {}/factory-reset-mqtt.txt.bak {}/factory-reset-mqtt.txt".format(script_directory, script_directory))
-        os.system("rm -r {}/factory-reset-mqtt.txt.bak".format(script_directory))
+        os.system("cp {}/factory-reset-mqtt.txt.bak {}/factory-reset-mqtt.txt > /dev/null 2>&1".format(script_directory, script_directory))
+        os.system("rm -r {}/factory-reset-mqtt.txt.bak > /dev/null 2>&1".format(script_directory))
 
         # Restore factory-reset-websockets.txt
-        os.system("cp {}/factory-reset-websockets.txt.bak {}/factory-reset-websockets.txt".format(script_directory, script_directory))
-        os.system("rm -r {}/factory-reset-websockets.txt.bak".format(script_directory))
+        os.system("cp {}/factory-reset-websockets.txt.bak {}/factory-reset-websockets.txt > /dev/null 2>&1".format(script_directory, script_directory))
+        os.system("rm -r {}/factory-reset-websockets.txt.bak > /dev/null 2>&1".format(script_directory))
 
     except:
 
