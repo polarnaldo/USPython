@@ -14,5 +14,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+    - name: Download USP Agent
+      run: git clone https://github.com/BroadbandForum/obuspa.git
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag usp-agent:$(date +%s)
