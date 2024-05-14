@@ -14,7 +14,7 @@ script_directory = os.path.dirname(__file__)
 # CTRL+C
 
 def signal_handler(key, frame):
-    print(colours.redColour + "\n\n[!] - Exiting...\n" + colours.endColour)
+    print(colours.redColour + "\n\n[!] Exiting...\n" + colours.endColour)
     restore_usp_agent()
     sys.exit(1)
 
@@ -53,20 +53,20 @@ def show_banner():
     print(colours.yellowColour + "╚═╝╚═╝╩   ┴  ┴ ┴ ┴└─┘┘└┘" + colours.endColour)
     print(colours.redColour + "\n          Version: 1.0.0\n" + colours.endColour)
 
-    print(colours.greenColour + "[@]" + colours.turquoiseColour +" - Made by Pol Arnaldo (@polarnaldo)" + colours.endColour)
+    print(colours.purpleColour + "[-]" + colours.turquoiseColour +" Made by Pol Arnaldo (@polarnaldo)" + colours.endColour)
 
 def show_menu():
 
     show_banner()
 
     print(colours.grayColour + "\nOptions:\n" + colours.endColour)
-    print(colours.yellowColour + "[1]" + colours.blueColour + " - Install Dependencies" + colours.endColour)
-    print(colours.yellowColour + "[2]" + colours.blueColour + " - Download USP Agent" + colours.endColour)
-    print(colours.yellowColour + "[3]" + colours.blueColour + " - Create USP Agent" + colours.endColour)
-    print(colours.yellowColour + "[4]" + colours.blueColour + " - Edit USP Agent" + colours.endColour)
-    print(colours.yellowColour + "[5]" + colours.blueColour + " - Show USP Agent" + colours.endColour)
-    print(colours.yellowColour + "[6]" + colours.blueColour + " - Delete USP Agent"  + colours.endColour)
-    print(colours.yellowColour + "[E]" + colours.blueColour + " - Exit"  + colours.endColour)
+    print(colours.yellowColour + "[1]" + colours.blueColour + " Install Dependencies" + colours.endColour)
+    print(colours.yellowColour + "[2]" + colours.blueColour + " Download USP Agent" + colours.endColour)
+    print(colours.yellowColour + "[3]" + colours.blueColour + " Create USP Agent" + colours.endColour)
+    print(colours.yellowColour + "[4]" + colours.blueColour + " Edit USP Agent" + colours.endColour)
+    print(colours.yellowColour + "[5]" + colours.blueColour + " Show USP Agent" + colours.endColour)
+    print(colours.yellowColour + "[6]" + colours.blueColour + " Delete USP Agent"  + colours.endColour)
+    print(colours.yellowColour + "[E]" + colours.blueColour + " Exit"  + colours.endColour)
 
 def install_dependencies():
 
@@ -79,13 +79,13 @@ def install_dependencies():
 
         # Install or update Docker
         if docker_installed != 0:
-            print(colours.greenColour + "\n[+]" + colours.turquoiseColour + " - Installing Docker..." + colours.endColour)
+            print(colours.greenColour + "\n[+]" + colours.turquoiseColour + " Installing Docker..." + colours.endColour)
             os.system("apt install docker.io -y > /dev/null 2>&1")
-            print(colours.greenColour + "\n[+] - Docker installed successfully!" + colours.endColour)
+            print(colours.greenColour + "\n[+] Docker installed successfully!" + colours.endColour)
         else:
-            print(colours.greenColour + "\n[+]" + colours.turquoiseColour + " - Docker already installed, updating..." + colours.endColour)
+            print(colours.greenColour + "\n[+]" + colours.turquoiseColour + " Docker already installed, updating..." + colours.endColour)
             os.system("apt install docker.io -y > /dev/null 2>&1")
-            print(colours.greenColour + "\n[+] - Docker updated successfully!" + colours.endColour)
+            print(colours.greenColour + "\n[+] Docker updated successfully!" + colours.endColour)
             ###########################################################################################################################################################sleep(1)
 
         # Check if Docker Compose is installed
@@ -93,13 +93,13 @@ def install_dependencies():
 
         # Install or update Docker Compose
         if docker_compose_installed != 0:
-            print(colours.greenColour + "\n[+]" + colours.turquoiseColour + " - Installing Docker Compose..." + colours.endColour)
+            print(colours.greenColour + "\n[+]" + colours.turquoiseColour + " Installing Docker Compose..." + colours.endColour)
             os.system("apt install docker-compose -y > /dev/null 2>&1")
-            print(colours.greenColour + "\n[+] - Docker Compose installed successfully!" + colours.endColour)
+            print(colours.greenColour + "\n[+] Docker Compose installed successfully!" + colours.endColour)
         else:
-            print(colours.greenColour + "\n[+]" + colours.turquoiseColour + " - Docker Compose already installed, updating..." + colours.endColour)
+            print(colours.greenColour + "\n[+]" + colours.turquoiseColour + " Docker Compose already installed, updating..." + colours.endColour)
             os.system("apt install docker-compose -y > /dev/null 2>&1")
-            print(colours.greenColour + "\n[+] - Docker Compose updated successfully!" + colours.endColour)
+            print(colours.greenColour + "\n[+] Docker Compose updated successfully!" + colours.endColour)
             ###########################################################################################################################################################sleep(1)
 
         # Check if Git is installed
@@ -107,19 +107,19 @@ def install_dependencies():
 
         # Install or update Git
         if git_installed != 0:
-            print(colours.greenColour + "\n[+]" + colours.turquoiseColour + " - Installing Git..." + colours.endColour)
+            print(colours.greenColour + "\n[+]" + colours.turquoiseColour + " Installing Git..." + colours.endColour)
             os.system("apt install git -y > /dev/null 2>&1")
-            print(colours.greenColour + "\n[+] - Git installed successfully!\n" + colours.endColour)
+            print(colours.greenColour + "\n[+] Git installed successfully!\n" + colours.endColour)
         else:
-            print(colours.greenColour + "\n[+]" + colours.turquoiseColour + " - Git already installed." + colours.endColour)
+            print(colours.greenColour + "\n[+]" + colours.turquoiseColour + " Git already installed." + colours.endColour)
             ###########################################################################################################################################################sleep(1)
         
-        print(colours.greenColour + "\n[+] - Dependencies installed successfully!\n" + colours.endColour)
+        print(colours.greenColour + "\n[+] Dependencies installed successfully!\n" + colours.endColour)
         ###########################################################################################################################################################sleep(3)
         
     except:
 
-        print(colours.redColour + "[!] - Error while installing dependencies." + colours.endColour)
+        print(colours.redColour + "\n[!] Error while installing dependencies.\n" + colours.endColour)
         sleep(3)
 
 def download_usp_agent():
@@ -131,24 +131,24 @@ def download_usp_agent():
         # Verifying if the directory exists
         if not os.path.exists(f"{script_directory}/obuspa"):
             # Clone the repository if it doesn't exist
-            print(colours.greenColour + "\n[+]" + colours.turquoiseColour + " - Downloading USP Agent (Obuspa)..." + colours.endColour)
+            print(colours.greenColour + "\n[+]" + colours.turquoiseColour + " Downloading USP Agent (Obuspa)..." + colours.endColour)
             os.system(f"git clone https://github.com/BroadbandForum/obuspa.git {script_directory}/obuspa > /dev/null 2>&1")
-            print(colours.greenColour + "\n[+] - Repository cloned successfully.\n" + colours.endColour)
+            print(colours.greenColour + "\n[+] Repository cloned successfully.\n" + colours.endColour)
             sleep(3)
         else:
-            print(colours.greenColour + "\n[+] - Repository already exists.\n" + colours.endColour)
+            print(colours.greenColour + "\n[+] Repository already exists.\n" + colours.endColour)
             sleep(3)
 
     except:
 
-        print(colours.redColour + "[!] - Error while downloading USP Agent." + colours.endColour)
+        print(colours.redColour + "\n[!] Error while downloading USP Agent.\n" + colours.endColour)
         sleep(3)
 
 def verify_usp_agent():
 
     # Verifying if the directory exists
     if not os.path.exists(f"{script_directory}/obuspa"):
-        print(colours.redColour + "\n[!] - Download the USP Agent\n" + colours.endColour)
+        print(colours.redColour + "\n[!] Download the USP Agent\n" + colours.endColour)
         sleep(3)
 
         return False
@@ -167,7 +167,7 @@ def copy_usp_agent():
 
     except:
 
-        print(colours.redColour + "[!] - Error while coping USP Agent." + colours.endColour)
+        print(colours.redColour + "\n[!] Error while coping USP Agent.\n" + colours.endColour)
         sleep(3)
 
 def restore_usp_agent():
@@ -192,7 +192,7 @@ def restore_usp_agent():
 
     except:
 
-        print(colours.redColour + "[!] - Error while restoring USP Agent." + colours.endColour)
+        print(colours.redColour + "\n[!] Error while restoring USP Agent.\n" + colours.endColour)
         sleep(3)
 
 def create_usp_agent():
@@ -205,42 +205,53 @@ def create_usp_agent():
 
         copy_usp_agent()
 
+        print(colours.grayColour + "\nCreate USP Agent:" + colours.endColour)
+
         # Add basic data to the data model
 
         while True:
-            user_agent_mtp = input(str("\n[+] - Define the Message Transfer Protocol of the USP Agent (MQTT or WebSockets): "))
+            user_agent_mtp = input(str(colours.yellowColour + "\n[+]" + colours.blueColour + " Define the Message Transfer Protocol of the USP Agent (MQTT or WebSockets): " + colours.endColour))
             if user_agent_mtp in ("MQTT","WebSockets"):
                 break
             else:
-                print(colours.redColour + "\n[!] - Please provide a valid MTP type." + colours.endColour)
+                print(colours.redColour + "\n[!] Please provide a valid MTP type." + colours.endColour)
+
+        # BETA
+
+        if user_agent_mtp == "WebSockets":
+
+            print(colours.yellowColour + "\n[!] WebSockets is still on beta. Try it again with MQTT.\n" + colours.endColour)
+            restore_usp_agent()
+            sleep(5)
+            return
 
         while True:
-            endpoint_id_name = input(str(colours.yellowColour + "\n[+]" + colours.blueColour + " - Define the endpoint_id_name: "  + colours.endColour ))
+            endpoint_id_name = input(str(colours.yellowColour + "\n[+]" + colours.blueColour + " Define the Endpoint ID name: "  + colours.endColour ))
             if endpoint_id_name.strip():
                 break
             else:
-                print(colours.redColour + "\n[!] - Please provide a non-empty value for endpoint_id_name." + colours.endColour)
+                print(colours.redColour + "\n[!] Please provide a non-empty value for Endpoint ID name." + colours.endColour)
 
         while True:
-            vendor_manufacturer = input(str(colours.yellowColour + "\n[+]" + colours.blueColour + " - Define the VENDOR_MANUFACTURER: "  + colours.endColour ))
+            vendor_manufacturer = input(str(colours.yellowColour + "\n[+]" + colours.blueColour + " Define the VENDOR_MANUFACTURER: "  + colours.endColour ))
             if vendor_manufacturer.strip():
                 break
             else:
-                print(colours.redColour + "\n[!] - Please provide a non-empty value for VENDOR_MANUFACTURER." + colours.endColour)
+                print(colours.redColour + "\n[!] Please provide a non-empty value for VENDOR_MANUFACTURER." + colours.endColour)
 
         while True:
-            vendor_product_class = input(str(colours.yellowColour + "\n[+]" + colours.blueColour + " - Define the VENDOR_PRODUCT_CLASS: "  + colours.endColour ))
+            vendor_product_class = input(str(colours.yellowColour + "\n[+]" + colours.blueColour + " Define the VENDOR_PRODUCT_CLASS: "  + colours.endColour ))
             if vendor_product_class.strip():
                 break
             else:
-                print(colours.redColour + "\n[!] - Please provide a non-empty value for VENDOR_PRODUCT_CLASS." + colours.endColour)
+                print(colours.redColour + "\n[!] Please provide a non-empty value for VENDOR_PRODUCT_CLASS." + colours.endColour)
 
         while True:
-            vendor_model_name = input(str(colours.yellowColour + "\n[+]" + colours.blueColour + " - Define the VENDOR_MODEL_NAME: "  + colours.endColour ))
+            vendor_model_name = input(str(colours.yellowColour + "\n[+]" + colours.blueColour + " Define the VENDOR_MODEL_NAME: "  + colours.endColour ))
             if vendor_model_name.strip():
                 break
             else:
-                print(colours.redColour + "\n[!] - Please provide a non-empty value for VENDOR_MODEL_NAME." + colours.endColour)
+                print(colours.redColour + "\n[!] Please provide a non-empty value for VENDOR_MODEL_NAME." + colours.endColour)
 
         # Add functions to data model
 
@@ -254,13 +265,13 @@ def create_usp_agent():
 
         while True:
 
-            exta_data = input(str("\n[+] - Do you want to add more data to the data model (y/n)? "))
+            exta_data = input(str(colours.redColour + "\n[?]" + colours.greenColour + " Do you want to add more data to the data model (y/n)? " + colours.endColour))
 
             if exta_data == "Y" or exta_data == "y":
     
                 while True:
                     
-                    data_type = input(str("\n[+] - Which data type do you want to add to the data model (1-READ/ONLY DATA | 2-READ/WRITE DATA)? "))
+                    data_type = input(str(colours.yellowColour + "\n[+]" + colours.blueColour + " Which data type do you want to add to the data model (1-READ/ONLY DATA | 2-READ/WRITE DATA)? " + colours.endColour))
 
                     # Add read only parameter to the data model
 
@@ -270,7 +281,7 @@ def create_usp_agent():
 
                         while True:
 
-                            read_only_parameter = input("\n[+] - Write the parameter you want to add (e.g - Device.Test.Location): ")
+                            read_only_parameter = input(colours.yellowColour + "\n[+]" + colours.blueColour + " Write the parameter you want to add (e.g - Device.Test.Location): " + colours.endColour)
                             
                             # Verify that there are not whitespaces in the output
                             if ' ' not in read_only_parameter:
@@ -286,29 +297,28 @@ def create_usp_agent():
                                         break
 
                                     else:
-                                        print("\n[!] - The parameter must not end: '.', ',', o '-'. Try it again.")
+                                        print(colours.redColour + "\n[!] The parameter must not end: '.', ',', o '-'. Try it again." + colours.endColour)
                                 else:
-                                    print("\n[!] - The parameter must have at least two words and the first one must be 'Device'. Try it again.")
+                                    print(colours.redColour + "\n[!] The parameter must have at least two words and the first one must be 'Device'. Try it again."  + colours.endColour)
                             else:
-                                print("\n[!] - The parameter must not have whitespaces. Try it again.")
+                                print(colours.redColour + "\n[!] The parameter must not have whitespaces. Try it again." + colours.endColour)
 
-                        value = input(str("\n[+] - Write the value of the parameter you want to add: "))
+                        value = input(str(colours.yellowColour + "\n[+]" + colours.blueColour + " Write the value of the parameter you want to add: " + colours.endColour))
 
-                        # Capitalizar la primera letra de cada palabra
+                        # Capitalize the first word
                         capitalized_words = [word.capitalize() for word in words]
 
-                        # Unir las palabras con puntos
+                        # Join the words with dots
                         transformed_data = '.'.join(capitalized_words)
 
-                        # Comprobar si el resultado transformado está entre comillas dobles y agregarlas si no lo está
+                        # Check the result
                         if not (transformed_data.startswith('"') and transformed_data.endswith('"')):
                             transformed_data = '"' + transformed_data + '"'
 
+                        # Clean result
                         transformed_data_clean=transformed_data.replace('"', '')
-
-                        print("\nInput:", transformed_data)
-                        print(transformed_data_clean)
                         
+                        # Var for function
                         test = transformed_data_clean.replace('.', '')
 
                         # Add functions to data model
@@ -331,8 +341,6 @@ def create_usp_agent():
 
                         os.system(command_read_only) 
 
-                        sleep(3)
-
                         break
 
                     # Add read write parameter to the data model
@@ -343,7 +351,7 @@ def create_usp_agent():
 
                         while True:
 
-                            read_write_parameter = input("\n[+] - Write the parameter you want to add (e.g - Device.Test.Location): ")
+                            read_write_parameter = input(str(colours.yellowColour + "\n[+]" + colours.blueColour + " Write the parameter you want to add (e.g - Device.Test.Location): " + colours.endColour))
                             
                             # Verify that there are not whitespaces in the output
                             if ' ' not in read_write_parameter:
@@ -359,31 +367,29 @@ def create_usp_agent():
                                         break
 
                                     else:
-                                        print("\n[!] - The parameter must not end: '.', ',', o '-'. Try it again.")
+                                        print(colours.redColour + "\n[!] The parameter must not end: '.', ',', o '-'. Try it again." + colours.endColour)
                                 else:
-                                    print("\n[!] - The parameter must have at least two words and the first one must be 'Device'. Try it again.")
+                                    print(colours.redColour + "\n[!] The parameter must have at least two words and the first one must be 'Device'. Try it again."  + colours.endColour)
                             else:
-                                print("\n[!] - The parameter must not have whitespaces. Try it again.")
+                                print(colours.redColour + "\n[!] The parameter must not have whitespaces. Try it again." + colours.endColour)
 
 
-                        value = input(str("\n[+] - Write the value of the parameter you want to add: "))
+                        value = input(str(colours.yellowColour + "\n[+]" + colours.blueColour + " Write the value of the parameter you want to add: " + colours.endColour))
 
-
-                        # Capitalizar la primera letra de cada palabra
+                        # Capitalize the first word
                         capitalized_words = [word.capitalize() for word in words]
 
-                        # Unir las palabras con puntos
+                        # Join the words with dots
                         transformed_data = '.'.join(capitalized_words)
 
-                        # Comprobar si el resultado transformado está entre comillas dobles y agregarlas si no lo está
+                        # Check the result
                         if not (transformed_data.startswith('"') and transformed_data.endswith('"')):
                             transformed_data = '"' + transformed_data + '"'
 
+                        # Clean result
                         transformed_data_clean=transformed_data.replace('"', '')
-
-                        print("\nInput:", transformed_data)
-                        print(transformed_data_clean)
                         
+                        # Var for function
                         test = transformed_data_clean.replace('.', '')
 
                         # Adding read write parameters with functions to vendor.c
@@ -398,8 +404,6 @@ def create_usp_agent():
                         )
 
                         os.system(command_readwrite)
-
-                        sleep(3)
                         
                         break
                     
@@ -434,8 +438,7 @@ def create_usp_agent():
         
         if user_agent_mtp == "WebSockets":
 
-            os.system("docker run -d -v {}/factory-reset-websockets.txt:/obuspa/factory-reset-websockets.txt --network host --name USPAgent-{} uspagent:{} obuspa -r /obuspa/factory-reset-websockets.txt -p -v4 -i lo".format(script_directory, endpoint_id_name, endpoint_id_name))
-            # os.system("docker run -d -v {}/factory-reset-mqtt.txt:/obuspa/factory-reset-mqtt.txt --network host --name USPAgent-{} uspagent:{} obuspa -r /obuspa/factory-reset-mqtt.txt -p -v4 -i lo".format(script_directory, endpoint_id_name, endpoint_id_name))
+            os.system("docker run -d -v {}/factory-reset-mqtt.txt:/obuspa/factory-reset-mqtt.txt --network host --name USPAgent-{} uspagent:{} obuspa -r /obuspa/factory-reset-mqtt.txt -p -v4 -i lo".format(script_directory, endpoint_id_name, endpoint_id_name))
             
         restore_usp_agent()
 
@@ -443,7 +446,7 @@ def create_usp_agent():
 
     except Exception as e:
 
-        print(colours.redColour + "[!] - Error while creating USP Agent:", str(e) + colours.endColour)
+        print(colours.redColour + "\n[!] Error while creating USP Agent:", str(e) + "\n" + colours.endColour)
         restore_usp_agent()
         sleep(10)
 
@@ -471,7 +474,16 @@ def create_usp_agent_with_yaml():
 
         if unknown_mtp_type:
             for unknown_mtp_type in unknown_mtp_type:
-                print(f"Tipo MTP desconocido: '{unknown_mtp_type}' es incorrecto en el documento.")
+                print(f"Unknown MTP type: '{unknown_mtp_type}' is misspelled in the document.")
+            return
+
+        # BETA
+
+        if "websockets" in found_mtp_type:
+
+            print(colours.yellowColour + "\n[!] WebSockets is still on beta. Try it again with MQTT.\n" + colours.endColour)
+            restore_usp_agent()
+            sleep(5)
             return
 
         # Check for unknown parameter types in the document
@@ -578,7 +590,7 @@ def create_usp_agent_with_yaml():
 
     except:
 
-        print(colours.redColour + "[!] - Error while creating USP Agent:", str(e) + colours.endColour)
+        print(colours.redColour + "\n[!] Error while creating USP Agent:", str(e) + colours.endColour)
         restore_usp_agent()
         sleep(10)
 
@@ -592,7 +604,7 @@ def edit_usp_agent():
 
     except:
 
-        print(colours.redColour + "[!] - Error while editing USP Agent." + colours.endColour)
+        print(colours.redColour + "[!] Error while editing USP Agent." + colours.endColour)
         sleep(3)
 
 def show_usp_agent():
@@ -605,7 +617,7 @@ def show_usp_agent():
         lines = output.splitlines()
         num_lines = 0
 
-        print(colours.yellowColour + "\n[+]" + colours.blueColour + " - USP Agents list: \n" + colours.endColour)
+        print(colours.yellowColour + "\n[+]" + colours.blueColour + " USP Agents list: \n" + colours.endColour)
 
         for line in lines:
             num_lines = num_lines + 1
@@ -613,17 +625,17 @@ def show_usp_agent():
             print(f"[{num_lines}] - {line}")
 
         if num_lines == 0:            
-            print(colours.redColour + "[!] - There are no USP Agents." + colours.endColour)
+            print(colours.redColour + "[!] There are no USP Agents." + colours.endColour)
             sleep(3)
             return
 
-        print(colours.yellowColour + "\n[+]" + colours.blueColour + " - Total USP Agents: " + str(num_lines) + "\n" + colours.endColour)
+        print(colours.yellowColour + "\n[+]" + colours.blueColour + " Total USP Agents: " + str(num_lines) + "\n" + colours.endColour)
 
         sleep(5)
 
     except:
 
-        print(colours.redColour + "[!] - Error while showing USP Agent." + colours.endColour)
+        print(colours.redColour + "\n[!] Error while showing USP Agent." + colours.endColour)
         sleep(3)
 
 def delete_usp_agent():
@@ -636,7 +648,7 @@ def delete_usp_agent():
         lines = output.splitlines()
         num_lines = 0
 
-        print(colours.yellowColour + "\n[+]" + colours.blueColour + " - USP Agents list: \n" + colours.endColour)
+        print(colours.yellowColour + "\n[+]" + colours.blueColour + " USP Agents list: \n" + colours.endColour)
 
         for line in lines:
             num_lines = num_lines + 1
@@ -644,11 +656,11 @@ def delete_usp_agent():
             print(str(num_lines) + " - " + str(line))
 
         if num_lines == 0:            
-            print(colours.redColour + "[!] - There are no USP Agents." + colours.endColour)
+            print(colours.redColour + "[!] There are no USP Agents." + colours.endColour)
             sleep(3)
             return
 
-        print(colours.yellowColour + "\n[+]" + colours.blueColour + " - Total USP Agents: " + str(num_lines) + colours.endColour)
+        print(colours.yellowColour + "\n[+]" + colours.blueColour + " Total USP Agents: " + str(num_lines) + colours.endColour)
 
         while True:
 
@@ -672,23 +684,23 @@ def delete_usp_agent():
                     break
 
                 else:
-                    print(colours.redColour + "\n[!] - Error: The number entered is out of range." + colours.endColour)
+                    print(colours.redColour + "\n[!] Error: The number entered is out of range." + colours.endColour)
 
             except ValueError:
 
-                print(colours.redColour + "\n[!] -Error: Please enter a valid number." + colours.endColour)
+                print(colours.redColour + "\n[!] Error: Please enter a valid number." + colours.endColour)
 
             sleep(3)
 
     except:
 
-        print(colours.redColour + "[!] - Error while deleting USP Agent." + colours.endColour)
+        print(colours.redColour + "[!] Error while deleting USP Agent." + colours.endColour)
         sleep(3)
 
 def main():
 
     if not check_root():
-        print(colours.redColour + "\n[!] - You must be root to run this script.\n" + colours.endColour)
+        print(colours.redColour + "\n[!] You must be root to run this script.\n" + colours.endColour)
         sys.exit(1)
 
     install_dependencies()
@@ -697,7 +709,7 @@ def main():
 
         show_menu()
 
-        option = input(str(colours.redColour + "\n[+]" + colours.greenColour + " - Select an option: " + colours.endColour))
+        option = input(str(colours.redColour + "\n[+]" + colours.greenColour + " Select an option: " + colours.endColour))
 
         if option == "1":
             install_dependencies()
@@ -716,11 +728,11 @@ def main():
         elif option == "E":
             os.system("clear")
             show_banner()
-            print(colours.redColour + "\n[!] - Exiting...\n" + colours.endColour)
+            print(colours.redColour + "\n[!] Exiting...\n" + colours.endColour)
             sleep(1)
             break
         else:
-            print(colours.redColour + "\n[?] - Invalid Option. Try Again..." + colours.endColour)
+            print(colours.redColour + "\n[?] Invalid Option. Try Again..." + colours.endColour)
             sleep(3)
 
 # MAIN
@@ -728,10 +740,10 @@ def main():
 if __name__ == "__main__":
     
     if not check_root():
-        print(colours.redColour + "\n[!] - You must be root to run this script.\n" + colours.endColour)
+        print(colours.redColour + "\n[!] You must be root to run this script.\n" + colours.endColour)
         sys.exit(1)
 
-    parser = argparse.ArgumentParser(description='USPython - Author: @polarnaldo - This program allows you to create a USP agent with YAML - Optional arguments:')
+    parser = argparse.ArgumentParser(description='USPython - Author: @polarnaldo - This program allows you to create a USP agent with YAML.')
     parser.add_argument('-d', '--dependencies', action='store_true', help='Install dependencies')
     parser.add_argument('-a', '--agent', action='store_true', help='Download USP Agent (Obuspa)')
     parser.add_argument('-c', '--create', action='store_true', help='Create USP agent with YAML')
