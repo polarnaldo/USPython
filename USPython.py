@@ -245,32 +245,32 @@ def create_usp_agent():
         print(f"{colours.yellowColour}\n[+]{colours.purpleColour} Basic data for the USP Agent:{colours.endColour}")
 
         while True:
-            endpoint_id_name = input(f"{colours.yellowColour}\n[+]{colours.blueColour} Define the Endpoint ID name: {colours.endColour}")
+            endpoint_id_name = input(f"{colours.yellowColour}\n[+]{colours.blueColour} Endpoint ID: {colours.endColour}")
             if endpoint_id_name.strip():
                 break
             else:
-                print(f"{colours.redColour}\n[!] Please provide a non-empty value for Endpoint ID name.{colours.endColour}")
+                print(f"{colours.redColour}\n[!] Please provide a non-empty value for Endpoint ID.{colours.endColour}")
 
         while True:
-            vendor_manufacturer = input(f"{colours.yellowColour}\n[+]{colours.blueColour} Define the VENDOR_MANUFACTURER: {colours.endColour}")
+            vendor_manufacturer = input(f"{colours.yellowColour}\n[+]{colours.blueColour} Manufacturer: {colours.endColour}")
             if vendor_manufacturer.strip():
                 break
             else:
-                print(f"{colours.redColour}\n[!] Please provide a non-empty value for VENDOR_MANUFACTURER.{colours.endColour}")
+                print(f"{colours.redColour}\n[!] Please provide a non-empty value for Manufacturer.{colours.endColour}")
 
         while True:
-            vendor_product_class = input(f"{colours.yellowColour}\n[+]{colours.blueColour} Define the VENDOR_PRODUCT_CLASS: {colours.endColour}")
+            vendor_product_class = input(f"{colours.yellowColour}\n[+]{colours.blueColour} Product Class: {colours.endColour}")
             if vendor_product_class.strip():
                 break
             else:
-                print(f"{colours.redColour}\n[!] Please provide a non-empty value for VENDOR_PRODUCT_CLASS.{colours.endColour}")
+                print(f"{colours.redColour}\n[!] Please provide a non-empty value for Product Class.{colours.endColour}")
 
         while True:
-            vendor_model_name = input(f"{colours.yellowColour}\n[+]{colours.blueColour} Define the VENDOR_MODEL_NAME: {colours.endColour}")
+            vendor_model_name = input(f"{colours.yellowColour}\n[+]{colours.blueColour} Model Name: {colours.endColour}")
             if vendor_model_name.strip():
                 break
             else:
-                print(f"{colours.redColour}\n[!] Please provide a non-empty value for VENDOR_MODEL_NAME.{colours.endColour}")
+                print(f"{colours.redColour}\n[!] Please provide a non-empty value for Model Name.{colours.endColour}")
 
         # Add functions to data model
 
@@ -289,8 +289,12 @@ def create_usp_agent():
             if extra_data == "Y" or extra_data == "y":
     
                 while True:
-                    
-                    data_type = input(f"{colours.yellowColour}\n[+]{colours.blueColour} Which data type do you want to add to the data model (1-READ/ONLY DATA | 2-READ/WRITE DATA)? {colours.endColour}")
+
+                    print(f"{colours.yellowColour}\n[+]{colours.purpleColour} Extra data for the USP Agent:\n{colours.endColour}")
+                    print(f"{colours.yellowColour}[1]{colours.blueColour} Read / Only Data{colours.endColour}")
+                    print(f"{colours.yellowColour}[2]{colours.blueColour} Read / Write Data{colours.endColour}")
+
+                    data_type = input(f"{colours.yellowColour}\n[+]{colours.blueColour} Select data type: {colours.endColour}")
 
                     # Add read only parameter to the data model
 
@@ -299,8 +303,8 @@ def create_usp_agent():
                         # Input verifications
 
                         while True:
-
-                            read_only_parameter = input(f"{colours.yellowColour}\n[+]{colours.blueColour} Write the parameter you want to add (e.g - Device.Test.Location): {colours.endColour}")
+                            
+                            read_only_parameter = input(f"{colours.yellowColour}\n[+]{colours.blueColour} Parameter (e.g - Device.Test.Location): {colours.endColour}")
                             
                             # Verify that there are not whitespaces in the output
                             if ' ' not in read_only_parameter:
@@ -324,7 +328,7 @@ def create_usp_agent():
                             else:
                                 print(f"{colours.redColour}\n[!] The parameter must not have whitespaces. Try it again.{colours.endColour}")
 
-                        value = input(f"{colours.yellowColour}\n[+]{colours.blueColour} Write the value of the parameter you want to add: {colours.endColour}")
+                        value = input(f"{colours.yellowColour}\n[+]{colours.blueColour} Value (e.g - Barcelona): {colours.endColour}")
 
                         # Capitalize the first word
                         capitalized_words = [word.capitalize() for word in words]
@@ -372,7 +376,7 @@ def create_usp_agent():
 
                         while True:
 
-                            read_write_parameter = input(f"{colours.yellowColour}\n[+]{colours.blueColour} Write the parameter you want to add (e.g - Device.Test.Location): {colours.endColour}")
+                            read_write_parameter = input(f"{colours.yellowColour}\n[+]{colours.blueColour} Parameter (e.g - Device.Test.Location): {colours.endColour}")
                             
                             # Verify that there are not whitespaces in the output
                             if ' ' not in read_write_parameter:
@@ -396,7 +400,7 @@ def create_usp_agent():
                             else:
                                 print(f"{colours.redColour}\n[!] The parameter must not have whitespaces. Try it again.{colours.endColour}")
 
-                        value = input(f"{colours.yellowColour}\n[+]{colours.blueColour} Write the value of the parameter you want to add: {colours.endColour}")
+                        value = input(f"{colours.yellowColour}\n[+]{colours.blueColour} Value (e.g - Barcelona): {colours.endColour}")
 
                         # Capitalize the first word
                         capitalized_words = [word.capitalize() for word in words]
