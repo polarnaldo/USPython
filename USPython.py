@@ -139,18 +139,19 @@ def download_usp_agent():
         # Verifying if the directory exists
         if not os.path.exists(f"{script_directory}/obuspa"):
             # Clone the repository if it doesn't exist
-            print(colours.greenColour + "\n[+]" + colours.turquoiseColour + " Downloading USP Agent (Obuspa)..." + colours.endColour)
+            print(f"{colours.greenColour}\n[+]{colours.turquoiseColour} Downloading USP Agent (Obuspa)...{colours.endColour}")
             os.system(f"git clone https://github.com/BroadbandForum/obuspa.git {script_directory}/obuspa > /dev/null 2>&1")
-            print(colours.greenColour + "\n[+] Repository cloned successfully.\n" + colours.endColour)
+            print(f"{colours.greenColour}\n[+] Repository cloned successfully.\n{colours.endColour}")
             sleep(3)
         else:
-            print(colours.greenColour + "\n[+] Repository already exists.\n" + colours.endColour)
+            print(f"{colours.greenColour}\n[+] Repository already exists.\n{colours.endColour}")
             sleep(3)
 
     except:
 
-        print(colours.redColour + "\n[!] Error while downloading USP Agent.\n" + colours.endColour)
+        print(f"{colours.redColour}\n[!] Error while downloading USP Agent.\n{colours.endColour}")
         sleep(3)
+
 
 def verify_usp_agent():
 
@@ -244,32 +245,32 @@ def create_usp_agent():
         print(f"{colours.yellowColour}\n[+]{colours.purpleColour} Basic data for the USP Agent:{colours.endColour}")
 
         while True:
-            endpoint_id_name = input(str(colours.yellowColour + "\n[+]" + colours.blueColour + " Define the Endpoint ID name: "  + colours.endColour ))
+            endpoint_id_name = input(f"{colours.yellowColour}\n[+]{colours.blueColour} Define the Endpoint ID name: {colours.endColour}")
             if endpoint_id_name.strip():
                 break
             else:
-                print(colours.redColour + "\n[!] Please provide a non-empty value for Endpoint ID name." + colours.endColour)
+                print(f"{colours.redColour}\n[!] Please provide a non-empty value for Endpoint ID name.{colours.endColour}")
 
         while True:
-            vendor_manufacturer = input(str(colours.yellowColour + "\n[+]" + colours.blueColour + " Define the VENDOR_MANUFACTURER: "  + colours.endColour ))
+            vendor_manufacturer = input(f"{colours.yellowColour}\n[+]{colours.blueColour} Define the VENDOR_MANUFACTURER: {colours.endColour}")
             if vendor_manufacturer.strip():
                 break
             else:
-                print(colours.redColour + "\n[!] Please provide a non-empty value for VENDOR_MANUFACTURER." + colours.endColour)
+                print(f"{colours.redColour}\n[!] Please provide a non-empty value for VENDOR_MANUFACTURER.{colours.endColour}")
 
         while True:
-            vendor_product_class = input(str(colours.yellowColour + "\n[+]" + colours.blueColour + " Define the VENDOR_PRODUCT_CLASS: "  + colours.endColour ))
+            vendor_product_class = input(f"{colours.yellowColour}\n[+]{colours.blueColour} Define the VENDOR_PRODUCT_CLASS: {colours.endColour}")
             if vendor_product_class.strip():
                 break
             else:
-                print(colours.redColour + "\n[!] Please provide a non-empty value for VENDOR_PRODUCT_CLASS." + colours.endColour)
+                print(f"{colours.redColour}\n[!] Please provide a non-empty value for VENDOR_PRODUCT_CLASS.{colours.endColour}")
 
         while True:
-            vendor_model_name = input(str(colours.yellowColour + "\n[+]" + colours.blueColour + " Define the VENDOR_MODEL_NAME: "  + colours.endColour ))
+            vendor_model_name = input(f"{colours.yellowColour}\n[+]{colours.blueColour} Define the VENDOR_MODEL_NAME: {colours.endColour}")
             if vendor_model_name.strip():
                 break
             else:
-                print(colours.redColour + "\n[!] Please provide a non-empty value for VENDOR_MODEL_NAME." + colours.endColour)
+                print(f"{colours.redColour}\n[!] Please provide a non-empty value for VENDOR_MODEL_NAME.{colours.endColour}")
 
         # Add functions to data model
 
@@ -283,13 +284,13 @@ def create_usp_agent():
 
         while True:
 
-            exta_data = input(str(colours.redColour + "\n[?]" + colours.greenColour + " Do you want to add more data to the data model (y/n)? " + colours.endColour))
+            extra_data = input(f"{colours.redColour}\n[?]{colours.greenColour} Do you want to add more data to the data model (y/n)? {colours.endColour}")
 
-            if exta_data == "Y" or exta_data == "y":
+            if extra_data == "Y" or extra_data == "y":
     
                 while True:
                     
-                    data_type = input(str(colours.yellowColour + "\n[+]" + colours.blueColour + " Which data type do you want to add to the data model (1-READ/ONLY DATA | 2-READ/WRITE DATA)? " + colours.endColour))
+                    data_type = input(f"{colours.yellowColour}\n[+]{colours.blueColour} Which data type do you want to add to the data model (1-READ/ONLY DATA | 2-READ/WRITE DATA)? {colours.endColour}")
 
                     # Add read only parameter to the data model
 
@@ -299,7 +300,7 @@ def create_usp_agent():
 
                         while True:
 
-                            read_only_parameter = input(colours.yellowColour + "\n[+]" + colours.blueColour + " Write the parameter you want to add (e.g - Device.Test.Location): " + colours.endColour)
+                            read_only_parameter = input(f"{colours.yellowColour}\n[+]{colours.blueColour} Write the parameter you want to add (e.g - Device.Test.Location): {colours.endColour}")
                             
                             # Verify that there are not whitespaces in the output
                             if ' ' not in read_only_parameter:
@@ -315,13 +316,15 @@ def create_usp_agent():
                                         break
 
                                     else:
-                                        print(colours.redColour + "\n[!] The parameter must not end: '.', ',', o '-'. Try it again." + colours.endColour)
-                                else:
-                                    print(colours.redColour + "\n[!] The parameter must have at least two words and the first one must be 'Device'. Try it again."  + colours.endColour)
-                            else:
-                                print(colours.redColour + "\n[!] The parameter must not have whitespaces. Try it again." + colours.endColour)
+                                        print(f"{colours.redColour}\n[!] The parameter must not end: '.', ',', or '-'. Try it again.{colours.endColour}")
 
-                        value = input(str(colours.yellowColour + "\n[+]" + colours.blueColour + " Write the value of the parameter you want to add: " + colours.endColour))
+                                else:
+                                    print(f"{colours.redColour}\n[!] The parameter must have at least two words and the first one must be 'Device'. Try it again.{colours.endColour}")
+
+                            else:
+                                print(f"{colours.redColour}\n[!] The parameter must not have whitespaces. Try it again.{colours.endColour}")
+
+                        value = input(f"{colours.yellowColour}\n[+]{colours.blueColour} Write the value of the parameter you want to add: {colours.endColour}")
 
                         # Capitalize the first word
                         capitalized_words = [word.capitalize() for word in words]
@@ -369,7 +372,7 @@ def create_usp_agent():
 
                         while True:
 
-                            read_write_parameter = input(str(colours.yellowColour + "\n[+]" + colours.blueColour + " Write the parameter you want to add (e.g - Device.Test.Location): " + colours.endColour))
+                            read_write_parameter = input(f"{colours.yellowColour}\n[+]{colours.blueColour} Write the parameter you want to add (e.g - Device.Test.Location): {colours.endColour}")
                             
                             # Verify that there are not whitespaces in the output
                             if ' ' not in read_write_parameter:
@@ -385,14 +388,15 @@ def create_usp_agent():
                                         break
 
                                     else:
-                                        print(colours.redColour + "\n[!] The parameter must not end: '.', ',', o '-'. Try it again." + colours.endColour)
+                                        print(f"{colours.redColour}\n[!] The parameter must not end: '.', ',', or '-'. Try it again.{colours.endColour}")
+
                                 else:
-                                    print(colours.redColour + "\n[!] The parameter must have at least two words and the first one must be 'Device'. Try it again."  + colours.endColour)
+                                    print(f"{colours.redColour}\n[!] The parameter must have at least two words and the first one must be 'Device'. Try it again.{colours.endColour}")
+
                             else:
-                                print(colours.redColour + "\n[!] The parameter must not have whitespaces. Try it again." + colours.endColour)
+                                print(f"{colours.redColour}\n[!] The parameter must not have whitespaces. Try it again.{colours.endColour}")
 
-
-                        value = input(str(colours.yellowColour + "\n[+]" + colours.blueColour + " Write the value of the parameter you want to add: " + colours.endColour))
+                        value = input(f"{colours.yellowColour}\n[+]{colours.blueColour} Write the value of the parameter you want to add: {colours.endColour}")
 
                         # Capitalize the first word
                         capitalized_words = [word.capitalize() for word in words]
@@ -426,37 +430,37 @@ def create_usp_agent():
                         break
                     
                     else:
-                        print(colours.redColour + "\n[?] - Invalid Option. Try Again..." + colours.endColour)        
 
-            elif exta_data == "N" or exta_data == "n":
+                        print(f"{colours.redColour}\n[?] - Invalid Option. Try Again...{colours.endColour}")
+
+            elif extra_data == "N" or extra_data == "n":
                 
                 sleep(3)
                 break
 
             else:
-                print(colours.redColour + "\n[?] - Invalid Option. Try Again..." + colours.endColour)
+
+                print(f"{colours.redColour}\n[?] - Invalid Option. Try Again...{colours.endColour}")
 
         # Edit Vendor Defs
-        os.system("sed -i 's/#define VENDOR_MODEL_NAME    \"USP Agent\"/#define VENDOR_MODEL_NAME    \"{}\"/' {}/obuspa/src/vendor/vendor_defs.h".format(vendor_model_name, script_directory))
-        os.system("sed -i 's/#define VENDOR_MANUFACTURER  \"Manufacturer\"/#define VENDOR_MANUFACTURER  \"{}\"/' {}/obuspa/src/vendor/vendor_defs.h".format(vendor_manufacturer, script_directory))
-        os.system("sed -i 's/#define VENDOR_PRODUCT_CLASS \"USP Agent\"/#define VENDOR_PRODUCT_CLASS \"{}\"/' {}/obuspa/src/vendor/vendor_defs.h".format(vendor_product_class, script_directory))
-        
+        os.system(f"sed -i 's/#define VENDOR_MODEL_NAME    \"USP Agent\"/#define VENDOR_MODEL_NAME    \"{vendor_model_name}\"/' {script_directory}/obuspa/src/vendor/vendor_defs.h")
+        os.system(f"sed -i 's/#define VENDOR_MANUFACTURER  \"Manufacturer\"/#define VENDOR_MANUFACTURER  \"{vendor_manufacturer}\"/' {script_directory}/obuspa/src/vendor/vendor_defs.h")
+        os.system(f"sed -i 's/#define VENDOR_PRODUCT_CLASS \"USP Agent\"/#define VENDOR_PRODUCT_CLASS \"{vendor_product_class}\"/' {script_directory}/obuspa/src/vendor/vendor_defs.h")
+
         # Edit Endpoint ID
-        os.system("sed -i 's/Device.LocalAgent.EndpointID \"usp-agent-mqtt\"/Device.LocalAgent.EndpointID \"{}\"/' {}/factory-reset-mqtt.txt".format(endpoint_id_name, script_directory))
-        os.system("sed -i 's/Device.LocalAgent.EndpointID \"usp-agent-ws\"/Device.LocalAgent.EndpointID \"{}\"/' {}/factory-reset-websockets.txt".format(endpoint_id_name, script_directory))
+        os.system(f"sed -i 's/Device.LocalAgent.EndpointID \"usp-agent-mqtt\"/Device.LocalAgent.EndpointID \"{endpoint_id_name}\"/' {script_directory}/factory-reset-mqtt.txt")
+        os.system(f"sed -i 's/Device.LocalAgent.EndpointID \"usp-agent-ws\"/Device.LocalAgent.EndpointID \"{endpoint_id_name}\"/' {script_directory}/factory-reset-websockets.txt")
 
         # Create Docker Image of USP Agent using Dockerfile located in the script directory
-        os.system("docker build -t uspagent:{} {}/.".format(endpoint_id_name, script_directory))
+        os.system(f"docker build -t uspagent:{endpoint_id_name} {script_directory}/.")
 
         # Create Docker Container using the previously build Docker image
 
         if user_agent_mtp == "MQTT":
-            
-            os.system("docker run -d -v {}/factory-reset-mqtt.txt:/obuspa/factory-reset-mqtt.txt --network host --name USPAgent-{} uspagent:{} obuspa -r /obuspa/factory-reset-mqtt.txt -p -v4 -i lo".format(script_directory, endpoint_id_name, endpoint_id_name))
-        
-        if user_agent_mtp == "WebSockets":
+            os.system(f"docker run -d -v {script_directory}/factory-reset-mqtt.txt:/obuspa/factory-reset-mqtt.txt --network host --name USPAgent-{endpoint_id_name} uspagent:{endpoint_id_name} obuspa -r /obuspa/factory-reset-mqtt.txt -p -v4 -i lo")
 
-            os.system("docker run -d -v {}/factory-reset-mqtt.txt:/obuspa/factory-reset-mqtt.txt --network host --name USPAgent-{} uspagent:{} obuspa -r /obuspa/factory-reset-mqtt.txt -p -v4 -i lo".format(script_directory, endpoint_id_name, endpoint_id_name))
+        if user_agent_mtp == "WebSockets":
+            os.system(f"docker run -d -v {script_directory}/factory-reset-mqtt.txt:/obuspa/factory-reset-mqtt.txt --network host --name USPAgent-{endpoint_id_name} uspagent:{endpoint_id_name} obuspa -r /obuspa/factory-reset-mqtt.txt -p -v4 -i lo")
             
         restore_usp_agent()
 
@@ -464,7 +468,7 @@ def create_usp_agent():
 
     except Exception as e:
 
-        print(colours.redColour + "\n[!] Error while creating USP Agent:", str(e) + "\n" + colours.endColour)
+        print(f"{colours.redColour}\n[!] Error while creating USP Agent: {str(e)}{colours.endColour}")
         restore_usp_agent()
         sleep(10)
 
@@ -499,7 +503,7 @@ def create_usp_agent_with_yaml():
 
         if "websockets" in found_mtp_type:
 
-            print(colours.yellowColour + "\n[!] WebSockets is still on beta. Try it again with MQTT.\n" + colours.endColour)
+            print(f"{colours.yellowColour}\n[!] WebSockets is still on beta. Try it again with MQTT.\n{colours.endColour}")
             restore_usp_agent()
             sleep(5)
             return
@@ -591,24 +595,24 @@ def create_usp_agent_with_yaml():
                 os.system(command_readwrite)
 
         # Edit Vendor Defs
-        os.system("sed -i 's/#define VENDOR_MODEL_NAME    \"USP Agent\"/#define VENDOR_MODEL_NAME    \"{}\"/' {}/obuspa/src/vendor/vendor_defs.h".format(model_parameter, script_directory))
-        os.system("sed -i 's/#define VENDOR_MANUFACTURER  \"Manufacturer\"/#define VENDOR_MANUFACTURER  \"{}\"/' {}/obuspa/src/vendor/vendor_defs.h".format(manufacturer_parameter, script_directory))
-        os.system("sed -i 's/#define VENDOR_PRODUCT_CLASS \"USP Agent\"/#define VENDOR_PRODUCT_CLASS \"{}\"/' {}/obuspa/src/vendor/vendor_defs.h".format(product_class, script_directory))
+        os.system(f"sed -i 's/#define VENDOR_MODEL_NAME    \"USP Agent\"/#define VENDOR_MODEL_NAME    \"{model_parameter}\"/' {script_directory}/obuspa/src/vendor/vendor_defs.h")
+        os.system(f"sed -i 's/#define VENDOR_MANUFACTURER  \"Manufacturer\"/#define VENDOR_MANUFACTURER  \"{manufacturer_parameter}\"/' {script_directory}/obuspa/src/vendor/vendor_defs.h")
+        os.system(f"sed -i 's/#define VENDOR_PRODUCT_CLASS \"USP Agent\"/#define VENDOR_PRODUCT_CLASS \"{product_class}\"/' {script_directory}/obuspa/src/vendor/vendor_defs.h")
 
         # Edit Endpoint ID
-        os.system("sed -i 's/Device.LocalAgent.EndpointID \"usp-agent-mqtt\"/Device.LocalAgent.EndpointID \"{}\"/' {}/factory-reset-mqtt.txt".format(end_point_id, script_directory))
+        os.system(f"sed -i 's/Device.LocalAgent.EndpointID \"usp-agent-mqtt\"/Device.LocalAgent.EndpointID \"{end_point_id}\"/' {script_directory}/factory-reset-mqtt.txt")
 
         # Create Docker Image of USP Agent using Dockerfile located in the script directory
-        os.system("docker build -t uspagent:{} {}/.".format(end_point_id, script_directory))
+        os.system(f"docker build -t uspagent:{end_point_id} {script_directory}/.")
 
-        # Create Docker Container using the previously build Docker image
-        os.system("docker run -d -v {}/factory-reset-mqtt.txt:/obuspa/factory-reset-mqtt.txt --network host --name USPAgent-{} uspagent:{} obuspa -r /obuspa/factory-reset-mqtt.txt -p -v4 -i lo".format(script_directory, end_point_id, end_point_id))
+        # Create Docker Container using the previously built Docker image
+        os.system(f"docker run -d -v {script_directory}/factory-reset-mqtt.txt:/obuspa/factory-reset-mqtt.txt --network host --name USPAgent-{end_point_id} uspagent:{end_point_id} obuspa -r /obuspa/factory-reset-mqtt.txt -p -v4 -i lo")
 
         restore_usp_agent()
 
-    except:
+    except Exception as e:
 
-        print(colours.redColour + "\n[!] Error while creating USP Agent:", str(e) + colours.endColour)
+        print(f"{colours.redColour}\n[!] Error while creating USP Agent: {str(e)}{colours.endColour}")
         restore_usp_agent()
         sleep(10)
 
@@ -622,9 +626,9 @@ def edit_usp_agent():
         os.system("sudo docker exec -it obuspa-mqtt obuspa -c show database")
         sleep(3)
 
-    except:
+    except Exception as e:
 
-        print(colours.redColour + "[!] Error while editing USP Agent." + colours.endColour)
+        print(f"{colours.redColour}\n[!] Error while editing USP Agent: {str(e)}{colours.endColour}")
         sleep(3)
 
 def show_usp_agent():
@@ -655,9 +659,9 @@ def show_usp_agent():
 
         sleep(5)
 
-    except:
+    except Exception as e:
 
-        print(colours.redColour + "\n[!] Error while showing USP Agent." + colours.endColour)
+        print(f"{colours.redColour}\n[!] Error while showing USP Agent: {str(e)}{colours.endColour}")
         sleep(3)
 
 def delete_usp_agent():
@@ -670,19 +674,18 @@ def delete_usp_agent():
         lines = output.splitlines()
         num_lines = 0
 
-        print(colours.yellowColour + "\n[+]" + colours.blueColour + " USP Agents list: \n" + colours.endColour)
+        print(f"{colours.yellowColour}\n[+]{colours.blueColour} USP Agents list: \n{colours.endColour}")
 
-        for line in lines:
-            num_lines = num_lines + 1
-
-            print(str(num_lines) + " - " + str(line))
+        for num, line in enumerate(lines, start=1):
+            num_lines += 1
+            print(f"{num} - {line}")
 
         if num_lines == 0:            
-            print(colours.redColour + "[!] There are no USP Agents." + colours.endColour)
+            print(f"{colours.redColour}[!] There are no USP Agents.{colours.endColour}")
             sleep(3)
             return
 
-        print(colours.yellowColour + "\n[+]" + colours.blueColour + " Total USP Agents: " + str(num_lines) + colours.endColour)
+        print(f"{colours.yellowColour}\n[+]{colours.blueColour} Total USP Agents: {num_lines}{colours.endColour}")
 
         while True:
 
@@ -701,28 +704,28 @@ def delete_usp_agent():
                     
                     print(f"\nSelected USP Agent to delete: {delete_agent}")
 
-                    os.system("docker rm {} -f".format(delete_agent))
+                    os.system(f"docker rm {delete_agent} -f")
                     
                     break
 
                 else:
-                    print(colours.redColour + "\n[!] Error: The number entered is out of range." + colours.endColour)
+                    print(f"{colours.redColour}\n[!] Error: The number entered is out of range.{colours.endColour}")
 
             except ValueError:
 
-                print(colours.redColour + "\n[!] Error: Please enter a valid number." + colours.endColour)
+                print(f"{colours.redColour}\n[!] Error: Please enter a valid number.{colours.endColour}")
 
             sleep(3)
 
-    except:
+    except Exception as e:
 
-        print(colours.redColour + "[!] Error while deleting USP Agent." + colours.endColour)
+        print(f"{colours.redColour}\n[!] Error while deleting USP Agent: {str(e)}{colours.endColour}")
         sleep(3)
 
 def main():
 
     if not check_root():
-        print(colours.redColour + "\n[!] You must be root to run this script.\n" + colours.endColour)
+        print(f"{colours.redColour}\n[!] You must be root to run this script.\n{colours.endColour}")
         sys.exit(1)
 
     install_dependencies()
@@ -731,7 +734,7 @@ def main():
 
         show_menu()
 
-        option = input(str(colours.redColour + "\n[+]" + colours.greenColour + " Select an option: " + colours.endColour))
+        option = input(f"{colours.redColour}\n[+]{colours.greenColour} Select an option: {colours.endColour}")
 
         if option == "1":
             install_dependencies()
@@ -750,11 +753,11 @@ def main():
         elif option == "E":
             os.system("clear")
             show_banner()
-            print(colours.redColour + "\n[!] Exiting...\n" + colours.endColour)
+            print(f"{colours.redColour}\n[!] Exiting...\n{colours.endColour}")
             sleep(1)
             break
         else:
-            print(colours.redColour + "\n[?] Invalid Option. Try Again..." + colours.endColour)
+            print(f"{colours.redColour}\n[?] Invalid Option. Try Again...{colours.endColour}")
             sleep(3)
 
 # MAIN
@@ -762,7 +765,7 @@ def main():
 if __name__ == "__main__":
     
     if not check_root():
-        print(colours.redColour + "\n[!] You must be root to run this script.\n" + colours.endColour)
+        print(f"{colours.redColour}\n[!] You must be root to run this script.\n{colours.endColour}")
         sys.exit(1)
 
     parser = argparse.ArgumentParser(description='USPython - Author: @polarnaldo - This program allows you to create a USP agent with YAML.')
