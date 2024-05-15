@@ -40,33 +40,39 @@ def check_root():
 def show_help():
 
     os.system("clear")
-    print("=== Docker Installation Script ===")
-    print("1. Install Docker")
-    print("2. Exit")
+
+    show_banner()
+
+    print(f"{colours.grayColour}\nOptions:\n{colours.endColour}")
+
+    print(f"{colours.yellowColour}\t[-m]{colours.blueColour} Script mode (terminal | gui) {colours.yellowColour}[-m terminal | -m gui]{colours.purpleColour}{colours.endColour}")
+    print(f"{colours.yellowColour}\t[-i]{colours.blueColour} Install the dependencies{colours.endColour}")
+    print(f"{colours.yellowColour}\t[-d]{colours.blueColour} Download the USP Agent{colours.endColour}")
+    print(f"{colours.yellowColour}\t[-h]{colours.blueColour} Show help\n{colours.endColour}")
 
 def show_banner():
     
     os.system("clear")
 
-    print(colours.yellowColour + "\n╦ ╦╔═╗╔═╗┬ ┬┌┬┐┬ ┬┌─┐┌┐┌" + colours.endColour)
-    print(colours.yellowColour + "║ ║╚═╗╠═╝└┬┘ │ ├─┤│ ││││" + colours.endColour)
-    print(colours.yellowColour + "╚═╝╚═╝╩   ┴  ┴ ┴ ┴└─┘┘└┘" + colours.endColour)
-    print(colours.redColour + "\n          Version: 1.0.0\n" + colours.endColour)
+    print(f"{colours.yellowColour}\n╦ ╦╔═╗╔═╗┬ ┬┌┬┐┬ ┬┌─┐┌┐┌{colours.endColour}")
+    print(f"{colours.yellowColour}║ ║╚═╗╠═╝└┬┘ │ ├─┤│ ││││{colours.endColour}")
+    print(f"{colours.yellowColour}╚═╝╚═╝╩   ┴  ┴ ┴ ┴└─┘┘└┘{colours.endColour}")
+    print(f"{colours.redColour}\n          Version: 1.0.0\n{colours.endColour}")
 
-    print(colours.purpleColour + "[-]" + colours.turquoiseColour +" Made by Pol Arnaldo (@polarnaldo)" + colours.endColour)
+    print(f"{colours.purpleColour}[-]{colours.turquoiseColour} Made by Pol Arnaldo (@polarnaldo){colours.endColour}")
 
 def show_menu():
 
     show_banner()
 
-    print(colours.grayColour + "\nOptions:\n" + colours.endColour)
-    print(colours.yellowColour + "[1]" + colours.blueColour + " Install Dependencies" + colours.endColour)
-    print(colours.yellowColour + "[2]" + colours.blueColour + " Download USP Agent" + colours.endColour)
-    print(colours.yellowColour + "[3]" + colours.blueColour + " Create USP Agent" + colours.endColour)
-    print(colours.yellowColour + "[4]" + colours.blueColour + " Edit USP Agent" + colours.endColour)
-    print(colours.yellowColour + "[5]" + colours.blueColour + " Show USP Agent" + colours.endColour)
-    print(colours.yellowColour + "[6]" + colours.blueColour + " Delete USP Agent"  + colours.endColour)
-    print(colours.yellowColour + "[E]" + colours.blueColour + " Exit"  + colours.endColour)
+    print(f"{colours.grayColour}\nOptions:\n{colours.endColour}")
+    print(f"{colours.yellowColour}[1]{colours.blueColour} Install Dependencies{colours.endColour}")
+    print(f"{colours.yellowColour}[2]{colours.blueColour} Download USP Agent{colours.endColour}")
+    print(f"{colours.yellowColour}[3]{colours.blueColour} Create USP Agent{colours.endColour}")
+    print(f"{colours.yellowColour}[4]{colours.blueColour} Edit USP Agent{colours.endColour}")
+    print(f"{colours.yellowColour}[5]{colours.blueColour} Show USP Agent{colours.endColour}")
+    print(f"{colours.yellowColour}[6]{colours.blueColour} Delete USP Agent{colours.endColour}")
+    print(f"{colours.yellowColour}[E]{colours.blueColour} Exit{colours.endColour}")
 
 def install_dependencies():
 
@@ -79,13 +85,13 @@ def install_dependencies():
 
         # Install or update Docker
         if docker_installed != 0:
-            print(colours.greenColour + "\n[+]" + colours.turquoiseColour + " Installing Docker..." + colours.endColour)
+            print(f"{colours.greenColour}\n[+]{colours.turquoiseColour} Installing Docker...{colours.endColour}")
             os.system("apt install docker.io -y > /dev/null 2>&1")
-            print(colours.greenColour + "\n[+] Docker installed successfully!" + colours.endColour)
+            print(f"{colours.greenColour}\n[+] Docker installed successfully!{colours.endColour}")
         else:
-            print(colours.greenColour + "\n[+]" + colours.turquoiseColour + " Docker already installed, updating..." + colours.endColour)
+            print(f"{colours.greenColour}\n[+]{colours.turquoiseColour} Docker already installed, updating...{colours.endColour}")
             os.system("apt install docker.io -y > /dev/null 2>&1")
-            print(colours.greenColour + "\n[+] Docker updated successfully!" + colours.endColour)
+            print(f"{colours.greenColour}\n[+] Docker updated successfully!{colours.endColour}")
             ###########################################################################################################################################################sleep(1)
 
         # Check if Docker Compose is installed
@@ -93,13 +99,13 @@ def install_dependencies():
 
         # Install or update Docker Compose
         if docker_compose_installed != 0:
-            print(colours.greenColour + "\n[+]" + colours.turquoiseColour + " Installing Docker Compose..." + colours.endColour)
+            print(f"{colours.greenColour}\n[+]{colours.turquoiseColour} Installing Docker Compose...{colours.endColour}")
             os.system("apt install docker-compose -y > /dev/null 2>&1")
-            print(colours.greenColour + "\n[+] Docker Compose installed successfully!" + colours.endColour)
+            print(f"{colours.greenColour}\n[+] Docker Compose installed successfully!{colours.endColour}")
         else:
-            print(colours.greenColour + "\n[+]" + colours.turquoiseColour + " Docker Compose already installed, updating..." + colours.endColour)
+            print(f"{colours.greenColour}\n[+]{colours.turquoiseColour} Docker Compose already installed, updating...{colours.endColour}")
             os.system("apt install docker-compose -y > /dev/null 2>&1")
-            print(colours.greenColour + "\n[+] Docker Compose updated successfully!" + colours.endColour)
+            print(f"{colours.greenColour}\n[+] Docker Compose updated successfully!{colours.endColour}")
             ###########################################################################################################################################################sleep(1)
 
         # Check if Git is installed
@@ -107,19 +113,19 @@ def install_dependencies():
 
         # Install or update Git
         if git_installed != 0:
-            print(colours.greenColour + "\n[+]" + colours.turquoiseColour + " Installing Git..." + colours.endColour)
+            print(f"{colours.greenColour}\n[+]{colours.turquoiseColour} Installing Git...{colours.endColour}")
             os.system("apt install git -y > /dev/null 2>&1")
-            print(colours.greenColour + "\n[+] Git installed successfully!\n" + colours.endColour)
+            print(f"{colours.greenColour}\n[+] Git installed successfully!\n{colours.endColour}")
         else:
-            print(colours.greenColour + "\n[+]" + colours.turquoiseColour + " Git already installed." + colours.endColour)
+            print(f"{colours.greenColour}\n[+]{colours.turquoiseColour} Git already installed.{colours.endColour}")
             ###########################################################################################################################################################sleep(1)
-        
-        print(colours.greenColour + "\n[+] Dependencies installed successfully!\n" + colours.endColour)
+
+        print(f"{colours.greenColour}\n[+] Dependencies installed successfully!\n{colours.endColour}")
         ###########################################################################################################################################################sleep(3)
-        
+                
     except:
 
-        print(colours.redColour + "\n[!] Error while installing dependencies.\n" + colours.endColour)
+        print(f"{colours.redColour}\n[!] Error while installing dependencies.\n{colours.endColour}")
         sleep(3)
 
 def download_usp_agent():
@@ -127,6 +133,8 @@ def download_usp_agent():
     try:
 
         show_banner()
+
+        print(f"{colours.grayColour}\nDownload USP Agent:{colours.endColour}")
 
         # Verifying if the directory exists
         if not os.path.exists(f"{script_directory}/obuspa"):
@@ -148,7 +156,7 @@ def verify_usp_agent():
 
     # Verifying if the directory exists
     if not os.path.exists(f"{script_directory}/obuspa"):
-        print(colours.redColour + "\n[!] Download the USP Agent\n" + colours.endColour)
+        print(f"{colours.redColour}\n[!] Download the USP Agent\n{colours.endColour}")
         sleep(3)
 
         return False
@@ -158,16 +166,16 @@ def verify_usp_agent():
 def copy_usp_agent():
 
     try:
-        
+
         # Copy files that can be modified (vendor.c, vendor_defs.h and factory-reset.txt)
-        os.system("cp {}/obuspa/src/vendor/vendor.c {}".format(script_directory, script_directory))
-        os.system("cp {}/obuspa/src/vendor/vendor_defs.h {}".format(script_directory, script_directory))
-        os.system("cp {}/factory-reset-mqtt.txt {}/factory-reset-mqtt.txt.bak".format(script_directory,script_directory))
-        os.system("cp {}/factory-reset-websockets.txt {}/factory-reset-websockets.txt.bak".format(script_directory,script_directory))
+        os.system(f"cp {script_directory}/obuspa/src/vendor/vendor.c {script_directory}")
+        os.system(f"cp {script_directory}/obuspa/src/vendor/vendor_defs.h {script_directory}")
+        os.system(f"cp {script_directory}/factory-reset-mqtt.txt {script_directory}/factory-reset-mqtt.txt.bak")
+        os.system(f"cp {script_directory}/factory-reset-websockets.txt {script_directory}/factory-reset-websockets.txt.bak")
 
     except:
 
-        print(colours.redColour + "\n[!] Error while coping USP Agent.\n" + colours.endColour)
+        print(f"{colours.redColour}\n[!] Error while copying USP Agent.\n{colours.endColour}")
         sleep(3)
 
 def restore_usp_agent():
@@ -175,24 +183,24 @@ def restore_usp_agent():
     try:
 
         # Restore vendor.c
-        os.system("cp {}/vendor.c {}/obuspa/src/vendor/vendor.c > /dev/null 2>&1".format(script_directory, script_directory))
-        os.system("rm -r {}/vendor.c > /dev/null 2>&1". format(script_directory))
+        os.system(f"cp {script_directory}/vendor.c {script_directory}/obuspa/src/vendor/vendor.c > /dev/null 2>&1")
+        os.system(f"rm -r {script_directory}/vendor.c > /dev/null 2>&1")
 
         # Restore vendor_defs.h
-        os.system("cp {}/vendor_defs.h {}/obuspa/src/vendor/vendor_defs.h > /dev/null 2>&1".format(script_directory, script_directory))
-        os.system("rm -r {}/vendor_defs.h > /dev/null 2>&1".format(script_directory))
+        os.system(f"cp {script_directory}/vendor_defs.h {script_directory}/obuspa/src/vendor/vendor_defs.h > /dev/null 2>&1")
+        os.system(f"rm -r {script_directory}/vendor_defs.h > /dev/null 2>&1")
 
         # Restore factory-reset-mqtt.txt
-        os.system("cp {}/factory-reset-mqtt.txt.bak {}/factory-reset-mqtt.txt > /dev/null 2>&1".format(script_directory, script_directory))
-        os.system("rm -r {}/factory-reset-mqtt.txt.bak > /dev/null 2>&1".format(script_directory))
+        os.system(f"cp {script_directory}/factory-reset-mqtt.txt.bak {script_directory}/factory-reset-mqtt.txt > /dev/null 2>&1")
+        os.system(f"rm -r {script_directory}/factory-reset-mqtt.txt.bak > /dev/null 2>&1")
 
         # Restore factory-reset-websockets.txt
-        os.system("cp {}/factory-reset-websockets.txt.bak {}/factory-reset-websockets.txt > /dev/null 2>&1".format(script_directory, script_directory))
-        os.system("rm -r {}/factory-reset-websockets.txt.bak > /dev/null 2>&1".format(script_directory))
+        os.system(f"cp {script_directory}/factory-reset-websockets.txt.bak {script_directory}/factory-reset-websockets.txt > /dev/null 2>&1")
+        os.system(f"rm -r {script_directory}/factory-reset-websockets.txt.bak > /dev/null 2>&1")
 
-    except:
+    except Exception as e:
 
-        print(colours.redColour + "\n[!] Error while restoring USP Agent.\n" + colours.endColour)
+        print(f"{colours.redColour}\n[!] Error while restoring USP Agent.\n{colours.endColour}")
         sleep(3)
 
 def create_usp_agent():
@@ -201,29 +209,39 @@ def create_usp_agent():
 
         show_banner()
 
+        print(f"{colours.grayColour}\nCreate USP Agent:{colours.endColour}")
+
         if not verify_usp_agent(): return
 
         copy_usp_agent()
 
-        print(colours.grayColour + "\nCreate USP Agent:" + colours.endColour)
-
         # Add basic data to the data model
 
         while True:
-            user_agent_mtp = input(str(colours.yellowColour + "\n[+]" + colours.blueColour + " Define the Message Transfer Protocol of the USP Agent (MQTT or WebSockets): " + colours.endColour))
-            if user_agent_mtp in ("MQTT","WebSockets"):
+            mtp_options = {"1": "MQTT", "2": "WebSockets"}
+
+            print(f"{colours.yellowColour}\n[+]{colours.purpleColour} Message Transfer Protocol of the USP Agent:\n{colours.endColour}")
+            print(f"{colours.yellowColour}[1]{colours.blueColour} MQTT{colours.endColour}")
+            print(f"{colours.yellowColour}[2]{colours.blueColour} WebSockets{colours.endColour}")
+
+            mtp_user_option = input(f"{colours.redColour}\n[+]{colours.greenColour} Select an option: {colours.endColour}")
+            mtp_selected_option = mtp_options.get(mtp_user_option)
+
+            if mtp_selected_option:
+                user_agent_mtp = mtp_selected_option
                 break
             else:
-                print(colours.redColour + "\n[!] Please provide a valid MTP type." + colours.endColour)
+                print(f"{colours.redColour}\n[!] Please provide a valid option.{colours.endColour}")
 
         # BETA
 
         if user_agent_mtp == "WebSockets":
-
-            print(colours.yellowColour + "\n[!] WebSockets is still on beta. Try it again with MQTT.\n" + colours.endColour)
+            print(f"{colours.yellowColour}\n[!] WebSockets is still on beta. Try it again with MQTT.\n{colours.endColour}")
             restore_usp_agent()
             sleep(5)
             return
+
+        print(f"{colours.yellowColour}\n[+]{colours.purpleColour} Basic data for the USP Agent:{colours.endColour}")
 
         while True:
             endpoint_id_name = input(str(colours.yellowColour + "\n[+]" + colours.blueColour + " Define the Endpoint ID name: "  + colours.endColour ))
@@ -599,6 +617,8 @@ def edit_usp_agent():
     try:
 
         show_banner()
+        print(colours.grayColour + "\nEdit USP Agent:" + colours.endColour)
+
         os.system("sudo docker exec -it obuspa-mqtt obuspa -c show database")
         sleep(3)
 
@@ -612,6 +632,8 @@ def show_usp_agent():
     try:
 
         show_banner()
+
+        print(f"{colours.grayColour}\nShow USP Agent:{colours.endColour}")
 
         output = subprocess.check_output("docker ps | grep USPAgent | awk '{print $NF}' | sort", shell=True, text=True)
         lines = output.splitlines()
@@ -747,6 +769,7 @@ if __name__ == "__main__":
     parser.add_argument('-d', '--dependencies', action='store_true', help='Install dependencies')
     parser.add_argument('-a', '--agent', action='store_true', help='Download USP Agent (Obuspa)')
     parser.add_argument('-c', '--create', action='store_true', help='Create USP agent with YAML')
+    parser.add_argument('--ayuda', action='store_true', help="Show ayuda")
 
     args = parser.parse_args()
 
@@ -754,6 +777,8 @@ if __name__ == "__main__":
         create_usp_agent_with_yaml()
     elif args.agent:
         download_usp_agent()
+    elif args.ayuda:
+        show_help()
     elif args.dependencies:
         install_dependencies()
     else:
