@@ -476,14 +476,19 @@ def create_usp_agent():
         restore_usp_agent()
         sleep(10)
 
-def create_usp_agent_with_yaml():
-    
+
+def create_usp_agent_with_yaml(file_path=None):
     try:
+        if file_path is None:
+            file_path = 'usp-data.yaml'
+            print(f"File provided: {file_path}")
+        else:
+            print(f"File provided: {file_path}")
 
         if not verify_usp_agent(): return
 
         # READ THE YAML FILE
-        with open('usp-data.yaml', 'r') as file:
+        with open(file_path, 'r') as file:
             data = yaml.safe_load(file)
 
         # VERIFIY YAML STRUCTURE
@@ -776,6 +781,7 @@ if __name__ == "__main__":
     parser.add_argument('-m', '--mode', choices=['interface', 'command'], help="Script mode (interface | command)")
     parser.add_argument('-i', '--install', action='store_true', help='Install  the dependencies')
     parser.add_argument('-d', '--download', action='store_true', help='Download the USP Agent (Obuspa)')
+    parser.add_argument('-f', '--file', help='Path to YAML file (only applicable in command mode)')
 
     args, unknown = parser.parse_known_args()
 
@@ -784,6 +790,9 @@ if __name__ == "__main__":
     elif args.mode == "interface":
         main()
     elif args.mode == "command":
+        if args.file:
+            create_usp_agent_with_yaml(args.file if args.file else 'usp-data.yaml')
+
         create_usp_agent_with_yaml()
     elif args.install:
         install_dependencies()

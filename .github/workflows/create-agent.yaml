@@ -1,0 +1,25 @@
+name: Run Python script on push to test branch
+
+on:
+  push:
+    branches:
+      - test
+
+jobs:
+  run_python_script:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      
+    - name: Install Docker
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y docker.io
+
+    - name: Install Git
+      run: sudo apt-get install -y git
+      
+    - name: Run Python script
+      run: python3 script.py -m interactive $GITHUB_EVENT_PATH
