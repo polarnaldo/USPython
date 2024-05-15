@@ -28,23 +28,43 @@ A Python-based utility for streamlined management of User Services Platform (USP
    ```
 
 3. **Execute the script:**
-   ```bash
-   sudo python3 USPython.py
-   ```
-4. **Optional Arguments:**
 
-- -c or --create: Create USP agent with YAML.
-- -d or --dependencies: Install dependencies.
+   - Interface mode:
+
+   ```bash
+   sudo python3 USPython.py -m interface
+   ```
+
+   - Command mode:
+
+   ```bash
+   sudo python3 USPython.py -m command
+   ```
+
+   - Show help:
+
+    ```bash
+   sudo python3 USPython.py
+    ```
+
+4. **Command Arguments:**
+
+If you are going to use the command mode, you must execute the following commands before executing the mode:
+
+- -i or --install: Install dependencies.
+- -d or --download: Download USP Agent.
 
 To use these optional arguments, you can run the script as follows:
 
 ```
-    sudo python3 USPython.py -c
-    sudo python3 USPython.py --create
+    sudo python3 USPython.py -i
+    sudo python3 USPython.py --install
     sudo python3 USPython.py -d
-    sudo python3 USPython.py --dependencies
+    sudo python3 USPython.py --download
 ```
-The -c or --create option triggers the creation of a USP agent with YAML configuration. The -d or --dependencies option indicates the intention to install dependencies required by the program.
+The -i or --install option indicates the intention to install dependencies required by the program (Docker, Docker Compose and Git).
+
+The -d or --download option indicates the intention to download the USP Agent using git used as a template ([Obuspa](https://github.com/BroadbandForum/obuspa)).
 
 If no arguments are provided, the script will print a usage message summarizing the available options and their usage.
 

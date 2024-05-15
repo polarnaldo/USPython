@@ -45,7 +45,7 @@ def show_help():
 
     print(f"{colours.grayColour}\nOptions:\n{colours.endColour}")
 
-    print(f"{colours.yellowColour}\t[-m]{colours.blueColour} Script mode (terminal | gui) {colours.yellowColour}[-m terminal | -m gui]{colours.purpleColour}{colours.endColour}")
+    print(f"{colours.yellowColour}\t[-m]{colours.blueColour} Script mode {colours.yellowColour}(interface | command) {colours.purpleColour}[-m interface | -m command]{colours.purpleColour}{colours.endColour}")
     print(f"{colours.yellowColour}\t[-i]{colours.blueColour} Install the dependencies{colours.endColour}")
     print(f"{colours.yellowColour}\t[-d]{colours.blueColour} Download the USP Agent{colours.endColour}")
     print(f"{colours.yellowColour}\t[-h]{colours.blueColour} Show help\n{colours.endColour}")
@@ -771,22 +771,23 @@ if __name__ == "__main__":
     if not check_root():
         print(f"{colours.redColour}\n[!] You must be root to run this script.\n{colours.endColour}")
         sys.exit(1)
-
+        
     parser = argparse.ArgumentParser(description='USPython - Author: @polarnaldo - This program allows you to create a USP agent with YAML.')
-    parser.add_argument('-d', '--dependencies', action='store_true', help='Install dependencies')
-    parser.add_argument('-a', '--agent', action='store_true', help='Download USP Agent (Obuspa)')
-    parser.add_argument('-c', '--create', action='store_true', help='Create USP agent with YAML')
-    parser.add_argument('--ayuda', action='store_true', help="Show ayuda")
+    parser.add_argument('-m', '--mode', choices=['interface', 'command'], help="Script mode (interface | command)")
+    parser.add_argument('-i', '--install', action='store_true', help='Install  the dependencies')
+    parser.add_argument('-d', '--download', action='store_true', help='Download the USP Agent (Obuspa)')
 
-    args = parser.parse_args()
+    args, unknown = parser.parse_known_args()
 
-    if args.create:
-        create_usp_agent_with_yaml()
-    elif args.agent:
-        download_usp_agent()
-    elif args.ayuda:
+    if unknown:
         show_help()
-    elif args.dependencies:
-        install_dependencies()
-    else:
+    elif args.mode == "interface":
         main()
+    elif args.mode == "command":
+        create_usp_agent_with_yaml()
+    elif args.install:
+        install_dependencies()
+    elif args.download:
+        download_usp_agent()
+    else:
+        show_help()
