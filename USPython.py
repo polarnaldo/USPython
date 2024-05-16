@@ -479,13 +479,8 @@ def create_usp_agent():
 
 def create_usp_agent_with_yaml(file, repeat):
     try:
-        print(file)
-        print(repeat)
-
+        
         repeat = int(repeat)
-
-        for i in range(repeat):
-            print(f"Iteración {i+1} de {repeat}")
 
         if not verify_usp_agent(): return
 
@@ -499,6 +494,8 @@ def create_usp_agent_with_yaml(file, repeat):
         manufacturer_parameter = data['usp_agent']['definitions'][1]['manufacturer_parameter']
         product_class = data['usp_agent']['definitions'][2]['product_class']
         model_parameter = data['usp_agent']['definitions'][3]['model_parameter']
+
+        default_end_point_id = end_point_id
 
         # Check for unknown mtp types in the document
         valid_mtp_type = {"websockets", "mqtt"}
@@ -620,7 +617,7 @@ def create_usp_agent_with_yaml(file, repeat):
             # Create Docker Container using the previously built Docker image
             os.system(f"docker run -d -v {script_directory}/factory-reset-mqtt.txt:/obuspa/factory-reset-mqtt.txt --network host --name USPAgent-{end_point_id} uspagent:{end_point_id} obuspa -r /obuspa/factory-reset-mqtt.txt -p -v4 -i lo")
 
-            end_point_id = end_point_id + str(i+1)
+            end_point_id = default_end_point_id + str(i+1)
 
             restore_usp_agent()
 
