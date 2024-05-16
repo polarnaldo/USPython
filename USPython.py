@@ -501,7 +501,7 @@ def create_usp_agent_with_yaml(file):
         if unknown_mtp_type:
             for unknown_mtp_type in unknown_mtp_type:
                 print(f"Unknown MTP type: '{unknown_mtp_type}' is misspelled in the document.")
-            return
+            sys.exit(1)
 
         # BETA
 
@@ -509,8 +509,7 @@ def create_usp_agent_with_yaml(file):
 
             print(f"{colours.yellowColour}\n[!] WebSockets is still on beta. Try it again with MQTT.\n{colours.endColour}")
             restore_usp_agent()
-            sleep(5)
-            return
+            sys.exit(1)
 
         # Check for unknown parameter types in the document
         valid_parameter_types = {"Read Only", "Read Write"}
@@ -520,7 +519,7 @@ def create_usp_agent_with_yaml(file):
         if unknown_parameter_types:
             for unknown_parameter_type in unknown_parameter_types:
                 print(f"Unknown type: '{unknown_parameter_type}' is misspelled in the document.")
-                return
+                sys.exit(1)
         
         # Access the data model
         seen_parameters = set()
@@ -529,7 +528,7 @@ def create_usp_agent_with_yaml(file):
             parameter = element['parameter']
             if not parameter.startswith('Device.') or len(parameter.split('.')) < 2:
                 print(f"Error: Parameter '{parameter}' on line {index} does not start with 'Device.' or is missing component after '.'.")
-                return
+                sys.exit(1)
             
             if parameter in seen_parameters:
                 duplicate_parameters.add(parameter)
@@ -539,7 +538,7 @@ def create_usp_agent_with_yaml(file):
             print("Error: Duplicate parameters found:")
             for parameter in duplicate_parameters:
                 print(f"  - {parameter}")
-            return
+            sys.exit(1)
         
         # CREATE USP AGENT
 
