@@ -18,7 +18,7 @@ usp_agent:
     - manufacturer_parameter: Big Blue Innova
     - product_class: Smart Lock
     - model_parameter: SL2000
-    - mtp-type: mqtt
+    - mtp-type: mqtt1231321
   data_model:
     - parameter: Device.Test.Notes
       value: Nota de ejemplo  
