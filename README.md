@@ -57,14 +57,34 @@ If you are going to use the command mode, you must execute the following command
 To use these optional arguments, you can run the script as follows:
 
 ```
-    sudo python3 USPython.py -i
-    sudo python3 USPython.py --install
-    sudo python3 USPython.py -d
-    sudo python3 USPython.py --download
+sudo python3 USPython.py -i
+sudo python3 USPython.py --install
+sudo python3 USPython.py -d
+sudo python3 USPython.py --download
 ```
 The -i or --install option indicates the intention to install dependencies required by the program (Docker, Docker Compose and Git).
 
 The -d or --download option indicates the intention to download the USP Agent using git used as a template ([Obuspa](https://github.com/BroadbandForum/obuspa)).
+
+If you are going to use the command mode, you can also use these optional parameters:
+
+- -f file.yaml or --file file.yaml: Specify a file .yaml with the USP data model.
+- -r x or --repeat x: Repeat the creation of the USP Agent x amount of times.
+
+```bash
+sudo python3 USPython.py -m command -f test.yaml
+sudo python3 USPython.py -m command -r 5
+```
+
+**In this example:**
+
+The -f or --file will create the USP Agent using the test.yaml file instead of the default usp-data.yaml provided in the repo. The specified file must have the same structure as the usp-data.yaml.
+
+The -r or --repeat will create five USP Agents with the same data model but with different endpoint ids. By default, the script will create the agents with the usp-data.yaml, but you can also use the -f or --file parameter.
+
+```bash
+sudo python3 USPython.py
+```
 
 If no arguments are provided, the script will print a usage message summarizing the available options and their usage.
 
