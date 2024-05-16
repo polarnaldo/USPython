@@ -25,9 +25,3 @@ jobs:
         for file in $(git diff --name-only HEAD^ HEAD | grep '.yaml'); do
           sudo python3 USPython.py -m command -f $file
         done
-
-    - name: Fail the push
-      if: always()
-      run: |
-        echo "[+] Works"
-        exit 0
