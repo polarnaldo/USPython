@@ -477,18 +477,13 @@ def create_usp_agent():
         sleep(10)
 
 
-def create_usp_agent_with_yaml(file_path=None):
+def create_usp_agent_with_yaml(file):
     try:
-        if file_path is None:
-            file_path = 'usp-data.yaml'
-            print(f"File provided: {file_path}")
-        else:
-            print(f"File provided: {file_path}")
 
         if not verify_usp_agent(): return
 
         # READ THE YAML FILE
-        with open(file_path, 'r') as file:
+        with open(file, 'r') as file:
             data = yaml.safe_load(file)
 
         # VERIFIY YAML STRUCTURE
@@ -621,7 +616,7 @@ def create_usp_agent_with_yaml(file_path=None):
 
     except Exception as e:
 
-        print(f"{colours.redColour}\n[!] Error while creating USP Agent: {str(e)}{colours.endColour}")
+        print(f"{colours.redColour}\n[!] Error while creating USP Agent: {str(e)}\n{colours.endColour}")
         restore_usp_agent()
         sleep(10)
 
@@ -781,19 +776,18 @@ if __name__ == "__main__":
     parser.add_argument('-m', '--mode', choices=['interface', 'command'], help="Script mode (interface | command)")
     parser.add_argument('-i', '--install', action='store_true', help='Install  the dependencies')
     parser.add_argument('-d', '--download', action='store_true', help='Download the USP Agent (Obuspa)')
-    parser.add_argument('-f', '--file', help='Path to YAML file (only applicable in command mode)')
+    parser.add_argument('-f', '--file', nargs='?', const='usp-data.yaml', help='Path to YAML file (only applicable in command mode)')
 
     args, unknown = parser.parse_known_args()
+
+    file_to_use = args.file if args.file else 'usp-data.yaml'
 
     if unknown:
         show_help()
     elif args.mode == "interface":
         main()
     elif args.mode == "command":
-        if args.file:
-            create_usp_agent_with_yaml(args.file if args.file else 'usp-data.yaml')
-
-        create_usp_agent_with_yaml()
+        create_usp_agent_with_yaml(file_to_use)
     elif args.install:
         install_dependencies()
     elif args.download:
