@@ -477,8 +477,15 @@ def create_usp_agent():
         sleep(10)
 
 
-def create_usp_agent_with_yaml(file):
+def create_usp_agent_with_yaml(file, repeat):
     try:
+        print(file)
+        print(repeat)
+
+        repeat = int(repeat)
+
+        for i in range(repeat):
+            print(f"Iteración {i+1} de {repeat}")
 
         if not verify_usp_agent(): return
 
@@ -542,76 +549,80 @@ def create_usp_agent_with_yaml(file):
         
         # CREATE USP AGENT
 
-        script_directory = os.path.dirname(__file__)
+        for i in range(repeat):
 
-        copy_usp_agent()
+            script_directory = os.path.dirname(__file__)
 
-        # Add functions to data model
+            copy_usp_agent()
 
-        os.system(r'''sed -i '/int VENDOR_Init(void)/i int GetModelNumber(dm_req_t *req, char *buf, int len);\n' ''' + script_directory + r'''/obuspa/src/vendor/vendor.c''')
-        
-        find_line="\/\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\/\/\*\*"
-        
-        os.system(r'''awk '/''' + find_line + r'''/ {++count} count==2 && /''' + find_line + r'''/ {print "int GetModelNumber(dm_req_t *req, char *buf, int len)\n{\n\tstrncpy(buf, \"MyModelNumber\", len);\n\treturn USP_ERR_OK;\n}\n"} 1' ''' + script_directory + r'''/obuspa/src/vendor/vendor.c > '''  + script_directory + r'''/obuspa/src/vendor/tmp_vendor.c && mv ''' + script_directory + r'''/obuspa/src/vendor/tmp_vendor.c '''+ script_directory + r'''/obuspa/src/vendor/vendor.c''')
+            # Add functions to data model
 
-        for element in data['usp_agent']['data_model']:
-            transformed_data_clean = element['parameter']
-            test= element['parameter'].replace('.', '')
-            value = element['value']
+            os.system(r'''sed -i '/int VENDOR_Init(void)/i int GetModelNumber(dm_req_t *req, char *buf, int len);\n' ''' + script_directory + r'''/obuspa/src/vendor/vendor.c''')
+            
+            find_line="\/\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\/\/\*\*"
+            
+            os.system(r'''awk '/''' + find_line + r'''/ {++count} count==2 && /''' + find_line + r'''/ {print "int GetModelNumber(dm_req_t *req, char *buf, int len)\n{\n\tstrncpy(buf, \"MyModelNumber\", len);\n\treturn USP_ERR_OK;\n}\n"} 1' ''' + script_directory + r'''/obuspa/src/vendor/vendor.c > '''  + script_directory + r'''/obuspa/src/vendor/tmp_vendor.c && mv ''' + script_directory + r'''/obuspa/src/vendor/tmp_vendor.c '''+ script_directory + r'''/obuspa/src/vendor/vendor.c''')
 
-            # Add read only parameter to the data model
+            for element in data['usp_agent']['data_model']:
+                transformed_data_clean = element['parameter']
+                test= element['parameter'].replace('.', '')
+                value = element['value']
 
-            if element['type'] == 'Read Only':
-                
-                # Add functions to data model
+                # Add read only parameter to the data model
 
-                os.system(r'''sed -i '/int VENDOR_Init(void)/i int Function_''' + test + r'''(dm_req_t *req, char *buf, int len);\n' ''' + script_directory + r'''/obuspa/src/vendor/vendor.c''')
-                
-                find_line="\/\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\/\/\*\*"
-                
-                os.system(r'''awk '/''' + find_line + r'''/ {++count} count==2 && /''' + find_line + r'''/ {print "int Function_''' + test + r'''(dm_req_t *req, char *buf, int len)\n{\n\tstrncpy(buf, \"'''+ value + r'''\", len);\n\treturn USP_ERR_OK;\n}\n"} 1' ''' + script_directory + r'''/obuspa/src/vendor/vendor.c > '''  + script_directory + r'''/obuspa/src/vendor/tmp_vendor.c && mv ''' + script_directory + r'''/obuspa/src/vendor/tmp_vendor.c '''+ script_directory + r'''/obuspa/src/vendor/vendor.c''')
-                
-                command_read_only = (
-                r'''sed -i '1,/return USP_ERR_OK;/ {
-                /return USP_ERR_OK;/i\\tint ''' + test + r''' = USP_REGISTER_VendorParam_ReadOnly("'''
-                + transformed_data_clean 
-                + r'''", Function_'''+ test +r''', DM_STRING);'''
-                + r'''\n\tif (''' + test + r''' != USP_ERR_OK){return ''' + test + r''';\}\n
-                }' ''' + script_directory + r"/obuspa/src/vendor/vendor.c"
-                )
+                if element['type'] == 'Read Only':
+                    
+                    # Add functions to data model
 
-                os.system(command_read_only)        
-                
-            # Add read write parameter to the data model
+                    os.system(r'''sed -i '/int VENDOR_Init(void)/i int Function_''' + test + r'''(dm_req_t *req, char *buf, int len);\n' ''' + script_directory + r'''/obuspa/src/vendor/vendor.c''')
+                    
+                    find_line="\/\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\/\/\*\*"
+                    
+                    os.system(r'''awk '/''' + find_line + r'''/ {++count} count==2 && /''' + find_line + r'''/ {print "int Function_''' + test + r'''(dm_req_t *req, char *buf, int len)\n{\n\tstrncpy(buf, \"'''+ value + r'''\", len);\n\treturn USP_ERR_OK;\n}\n"} 1' ''' + script_directory + r'''/obuspa/src/vendor/vendor.c > '''  + script_directory + r'''/obuspa/src/vendor/tmp_vendor.c && mv ''' + script_directory + r'''/obuspa/src/vendor/tmp_vendor.c '''+ script_directory + r'''/obuspa/src/vendor/vendor.c''')
+                    
+                    command_read_only = (
+                    r'''sed -i '1,/return USP_ERR_OK;/ {
+                    /return USP_ERR_OK;/i\\tint ''' + test + r''' = USP_REGISTER_VendorParam_ReadOnly("'''
+                    + transformed_data_clean 
+                    + r'''", Function_'''+ test +r''', DM_STRING);'''
+                    + r'''\n\tif (''' + test + r''' != USP_ERR_OK){return ''' + test + r''';\}\n
+                    }' ''' + script_directory + r"/obuspa/src/vendor/vendor.c"
+                    )
 
-            if element['type'] == 'Read Write':
+                    os.system(command_read_only)        
+                    
+                # Add read write parameter to the data model
 
-                command_readwrite = (
-                r'''sed -i '0,/return USP_ERR_OK;/ {
-                /return USP_ERR_OK;/i\\tint ''' + test + r''' = USP_REGISTER_DBParam_ReadWrite("'''
-                + transformed_data_clean 
-                + r'''", "''' + value + r'''", NULL, NULL, DM_STRING);'''
-                + r'''\n\tif (''' + test + r''' != USP_ERR_OK){return ''' + test + r''';\}\n
-                }' ''' + script_directory + r"/obuspa/src/vendor/vendor.c"
-                )
+                if element['type'] == 'Read Write':
 
-                os.system(command_readwrite)
+                    command_readwrite = (
+                    r'''sed -i '0,/return USP_ERR_OK;/ {
+                    /return USP_ERR_OK;/i\\tint ''' + test + r''' = USP_REGISTER_DBParam_ReadWrite("'''
+                    + transformed_data_clean 
+                    + r'''", "''' + value + r'''", NULL, NULL, DM_STRING);'''
+                    + r'''\n\tif (''' + test + r''' != USP_ERR_OK){return ''' + test + r''';\}\n
+                    }' ''' + script_directory + r"/obuspa/src/vendor/vendor.c"
+                    )
 
-        # Edit Vendor Defs
-        os.system(f"sed -i 's/#define VENDOR_MODEL_NAME    \"USP Agent\"/#define VENDOR_MODEL_NAME    \"{model_parameter}\"/' {script_directory}/obuspa/src/vendor/vendor_defs.h")
-        os.system(f"sed -i 's/#define VENDOR_MANUFACTURER  \"Manufacturer\"/#define VENDOR_MANUFACTURER  \"{manufacturer_parameter}\"/' {script_directory}/obuspa/src/vendor/vendor_defs.h")
-        os.system(f"sed -i 's/#define VENDOR_PRODUCT_CLASS \"USP Agent\"/#define VENDOR_PRODUCT_CLASS \"{product_class}\"/' {script_directory}/obuspa/src/vendor/vendor_defs.h")
+                    os.system(command_readwrite)
 
-        # Edit Endpoint ID
-        os.system(f"sed -i 's/Device.LocalAgent.EndpointID \"usp-agent-mqtt\"/Device.LocalAgent.EndpointID \"{end_point_id}\"/' {script_directory}/factory-reset-mqtt.txt")
+            # Edit Vendor Defs
+            os.system(f"sed -i 's/#define VENDOR_MODEL_NAME    \"USP Agent\"/#define VENDOR_MODEL_NAME    \"{model_parameter}\"/' {script_directory}/obuspa/src/vendor/vendor_defs.h")
+            os.system(f"sed -i 's/#define VENDOR_MANUFACTURER  \"Manufacturer\"/#define VENDOR_MANUFACTURER  \"{manufacturer_parameter}\"/' {script_directory}/obuspa/src/vendor/vendor_defs.h")
+            os.system(f"sed -i 's/#define VENDOR_PRODUCT_CLASS \"USP Agent\"/#define VENDOR_PRODUCT_CLASS \"{product_class}\"/' {script_directory}/obuspa/src/vendor/vendor_defs.h")
 
-        # Create Docker Image of USP Agent using Dockerfile located in the script directory
-        os.system(f"docker build -t uspagent:{end_point_id} {script_directory}/.")
+            # Edit Endpoint ID
+            os.system(f"sed -i 's/Device.LocalAgent.EndpointID \"usp-agent-mqtt\"/Device.LocalAgent.EndpointID \"{end_point_id}\"/' {script_directory}/factory-reset-mqtt.txt")
 
-        # Create Docker Container using the previously built Docker image
-        os.system(f"docker run -d -v {script_directory}/factory-reset-mqtt.txt:/obuspa/factory-reset-mqtt.txt --network host --name USPAgent-{end_point_id} uspagent:{end_point_id} obuspa -r /obuspa/factory-reset-mqtt.txt -p -v4 -i lo")
+            # Create Docker Image of USP Agent using Dockerfile located in the script directory
+            os.system(f"docker build -t uspagent:{end_point_id} {script_directory}/.")
 
-        restore_usp_agent()
+            # Create Docker Container using the previously built Docker image
+            os.system(f"docker run -d -v {script_directory}/factory-reset-mqtt.txt:/obuspa/factory-reset-mqtt.txt --network host --name USPAgent-{end_point_id} uspagent:{end_point_id} obuspa -r /obuspa/factory-reset-mqtt.txt -p -v4 -i lo")
+
+            end_point_id = end_point_id + str(i+1)
+
+            restore_usp_agent()
 
     except Exception as e:
 
@@ -776,17 +787,19 @@ if __name__ == "__main__":
     parser.add_argument('-i', '--install', action='store_true', help='Install  the dependencies')
     parser.add_argument('-d', '--download', action='store_true', help='Download the USP Agent (Obuspa)')
     parser.add_argument('-f', '--file', nargs='?', const='usp-data.yaml', help='Path to YAML file (only applicable in command mode)')
+    parser.add_argument('-r', '--repeat', nargs='?', const=1, help='Create multiple agents (only applicable in command mode)')
 
     args, unknown = parser.parse_known_args()
 
     file_to_use = args.file if args.file else 'usp-data.yaml'
+    repeat_times = args.repeat if args.repeat else 1
 
     if unknown:
         show_help()
     elif args.mode == "interface":
         main()
     elif args.mode == "command":
-        create_usp_agent_with_yaml(file_to_use)
+        create_usp_agent_with_yaml(file_to_use, repeat_times)
     elif args.install:
         install_dependencies()
     elif args.download:
