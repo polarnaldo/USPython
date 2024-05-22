@@ -2,10 +2,15 @@
 
 # USPython - Author: @polarnaldo (Pol Arnaldo)
 
+import os
+import sys
 import signal
-import yaml, argparse
+import subprocess
 from time import sleep
-import os, sys, subprocess
+import argparse
+import yaml
+
+# Tu código aquí
 
 # DEFS
 
@@ -43,15 +48,23 @@ def show_help():
 
     show_banner()
 
+    options = [
+        ("-m", "Script mode (interface | command)", "[-m interface | -m command]"),
+        ("-i", "Install the dependencies", ""),
+        ("-d", "Download the USP Agent", ""),
+        ("-h", "Show help", "\n")
+    ]
+
     print(f"{colours.grayColour}\nOptions:\n{colours.endColour}")
 
-    print(f"{colours.yellowColour}\t[-m]{colours.blueColour} Script mode {colours.yellowColour}(interface | command) {colours.purpleColour}[-m interface | -m command]{colours.purpleColour}{colours.endColour}")
-    print(f"{colours.yellowColour}\t[-i]{colours.blueColour} Install the dependencies{colours.endColour}")
-    print(f"{colours.yellowColour}\t[-d]{colours.blueColour} Download the USP Agent{colours.endColour}")
-    print(f"{colours.yellowColour}\t[-h]{colours.blueColour} Show help\n{colours.endColour}")
+    for option, description, example in options:
+        extra_help = f" {colours.purpleColour}{example}{colours.endColour}" if example else ""
+        if option == "-m":
+            description = f"{colours.blueColour}Script mode {colours.yellowColour}(interface | command){colours.endColour}"
+        print(f"{colours.yellowColour}\t[{option}]{colours.blueColour} {description}{extra_help}{colours.endColour}")
 
 def show_banner():
-    
+
     os.system("clear")
 
     print(f"{colours.yellowColour}\n╦ ╦╔═╗╔═╗┬ ┬┌┬┐┬ ┬┌─┐┌┐┌{colours.endColour}")
@@ -241,6 +254,15 @@ def create_usp_agent():
             restore_usp_agent()
             sleep(5)
             return
+
+        print(f"{colours.yellowColour}\n[+]{colours.purpleColour} IP Address of the USP Controller:{colours.endColour}")
+
+        while True:
+            usp_controller_ip = input(f"{colours.yellowColour}\n[+]{colours.blueColour} IP Address: {colours.endColour}")
+            if usp_controller_ip.strip():
+                break
+            else:
+                print(f"{colours.redColour}\n[!] Please provide a non-empty value for IP Address of the USP Agent.{colours.endColour}")
 
         print(f"{colours.yellowColour}\n[+]{colours.purpleColour} Basic data for the USP Agent:{colours.endColour}")
 
@@ -453,6 +475,7 @@ def create_usp_agent():
 
         # Edit Endpoint ID
         os.system(f"sed -i 's/Device.LocalAgent.EndpointID \"usp-agent-mqtt\"/Device.LocalAgent.EndpointID \"{endpoint_id_name}\"/' {script_directory}/factory-reset-mqtt.txt")
+        os.system(f"sed -i 's/Device.MQTT.Client.1.BrokerAddress \"127.0.0.1\"/Device.MQTT.Client.1.BrokerAddress \"{usp_controller_ip}\"/' {script_directory}/factory-reset-mqtt.txt")
         os.system(f"sed -i 's/Device.LocalAgent.EndpointID \"usp-agent-ws\"/Device.LocalAgent.EndpointID \"{endpoint_id_name}\"/' {script_directory}/factory-reset-websockets.txt")
 
         # Create Docker Image of USP Agent using Dockerfile located in the script directory
